@@ -4,7 +4,9 @@ import { Input } from "./ui/input";
 export interface CustomFieldProps {
   fieldLabelProps: React.ComponentProps<typeof FieldLabel>;
   inputProps: React.ComponentProps<typeof Input>;
-  fieldDescriptionProps?: React.ComponentProps<typeof FieldDescription>;
+  fieldDescriptionProps?: React.ComponentProps<typeof FieldDescription> & {
+    errorInField?: boolean;
+  };
 }
 
 const CustomField = ({
@@ -12,6 +14,8 @@ const CustomField = ({
   inputProps,
   fieldDescriptionProps,
 }: CustomFieldProps) => {
+  const { errorInField, ...restDescriptionProps } = fieldDescriptionProps ?? {};
+
   return (
     <Field>
       <FieldLabel className="max-w-fit" {...fieldLabelProps}>
@@ -22,7 +26,10 @@ const CustomField = ({
         {...inputProps}
       />
       {fieldDescriptionProps && (
-        <FieldDescription {...fieldDescriptionProps}>
+        <FieldDescription
+          className={errorInField ? "text-app-red" : ""}
+          {...restDescriptionProps}
+        >
           {fieldDescriptionProps.children}
         </FieldDescription>
       )}

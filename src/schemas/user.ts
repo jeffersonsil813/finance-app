@@ -42,3 +42,19 @@ const baseUserSchema = z.object({
 export const createUserSchema = baseUserSchema;
 
 export const updateUserSchema = baseUserSchema.omit({ email: true }).partial();
+
+export const loginSchema = baseUserSchema
+  .pick({
+    email: true,
+    password: true,
+  })
+  .extend({
+    password: z
+      .string({
+        error: (issue) =>
+          issue.input === undefined
+            ? "Password is required"
+            : "Password must be a valid string",
+      })
+      .min(1, "Password is required"),
+  });

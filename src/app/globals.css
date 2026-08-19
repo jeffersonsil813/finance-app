@@ -5,13 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-inter);
   --color-app-background: #F2F2EE;
   --color-white: #ffffff;
   --color-black: #111118;
   --color-gray-field: #F9F9F7;
   --color-light-green: #16A34A;
   --color-gray-subtitle: #6B7280;
+  --color-app-red: #DC2626;
 }
 
 @theme inline {
@@ -90,6 +90,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --font-sans: var(--font-inter);
 }
 
 .dark {

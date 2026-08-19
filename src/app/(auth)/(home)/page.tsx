@@ -1,16 +1,32 @@
+"use client";
+
 import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
 import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
+import { loginSchema } from "@/schemas/user";
+import { useFormik } from "formik";
 import Link from "next/link";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 
 export default function Login() {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: toFormikValidationSchema(loginSchema),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
   return (
     <div className="flex flex-col space-y-7 items-center justify-center">
       <Subtitle text="Sign in to your account" />
 
       <div className="bg-white rounded-2xl p-6 w-full shadow-md">
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
           <CustomField
             fieldLabelProps={{ htmlFor: "email", children: "Email" }}
             inputProps={{
@@ -18,7 +34,14 @@ export default function Login() {
               type: "email",
               placeholder: "email@example.com",
               autoFocus: true,
+              value: formik.values.email,
+              onChange: formik.handleChange,
             }}
+            fieldDescriptionProps={
+              formik.touched.email && formik.errors.email
+                ? { children: formik.errors.email, errorInField: true }
+                : undefined
+            }
           />
 
           <PasswordField
@@ -26,7 +49,14 @@ export default function Login() {
             inputProps={{
               id: "password",
               placeholder: "Password",
+              value: formik.values.password,
+              onChange: formik.handleChange,
             }}
+            fieldDescriptionProps={
+              formik.touched.password && formik.errors.password
+                ? { children: formik.errors.password, errorInField: true }
+                : undefined
+            }
           />
 
           <CustomButton type="submit">Sign In</CustomButton>

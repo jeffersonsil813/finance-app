@@ -19,6 +19,8 @@ const PasswordField = ({
 
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
+  const { errorInField, ...restDescriptionProps } = fieldDescriptionProps ?? {};
+
   return (
     <Field>
       <FieldLabel className="max-w-fit" {...fieldLabelProps}>
@@ -47,7 +49,10 @@ const PasswordField = ({
       </div>
 
       {fieldDescriptionProps && (
-        <FieldDescription {...fieldDescriptionProps}>
+        <FieldDescription
+          className={errorInField ? "text-app-red" : ""}
+          {...restDescriptionProps}
+        >
           {fieldDescriptionProps.children}
         </FieldDescription>
       )}
