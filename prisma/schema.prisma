@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  name         String
+  transactions Transaction[]
+}
+
+model Transaction {
+  id              String           @id @default(uuid())
+  description     String?
+  amount          Float
+  type            Type
+  expenseCategory ExpenseCategory?
+  incomeCategory  IncomeCategory?
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  createdAt       DateTime         @default(now())
+  date            DateTime
+}
+
+enum Type {
+  INCOME
+  EXPENSE
+}
+
+enum ExpenseCategory {
+  FOOD
+  RESTAURANT
+  SUPERMARKET
+  TRANSPORT
+  FUEL
+  PUBLIC_TRANSPORT
+  VEHICLE_MAINTENANCE
+  HOUSING
+  RENT
+  CONDOMINIUM
+  WATER
+  ELECTRICITY
+  GAS
+  INTERNET
+  PHONE
+  HEALTH
+  PHARMACY
+  MEDICAL
+  DENTIST
+  EDUCATION
+  COURSES
+  BOOKS
+  ENTERTAINMENT
+  STREAMING
+  GAMES
+  MOVIES
+  SHOPPING
+  CLOTHING
+  ELECTRONICS
+  TRAVEL
+  INSURANCE
+  TAXES
+  PETS
+  OTHER
+}
+
+enum IncomeCategory {
+  SALARY
+  BONUS
+  FREELANCE
+  COMMISSION
+  INVESTMENT
+  DIVIDENDS
+  RENTAL
+  REFUND
+  GIFT
+  SALE
+  OTHER
+}
