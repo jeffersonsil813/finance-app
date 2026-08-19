@@ -17,6 +17,7 @@ export default function Login() {
               id: "email",
               type: "email",
               placeholder: "email@example.com",
+              autoFocus: true,
             }}
           />
 

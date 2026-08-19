@@ -17,6 +17,7 @@ const Register = () => {
               id: "name",
               type: "text",
               placeholder: "Sarah Chen",
+              autoFocus: true,
             }}
           />
 
