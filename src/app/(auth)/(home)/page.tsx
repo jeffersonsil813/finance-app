@@ -5,11 +5,26 @@ import CustomField from "@/components/custom-field";
 import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
 import { loginSchema } from "@/schemas/user";
+import { LoginClient } from "@/services/login";
+import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
 export default function Login() {
+  const router = useRouter();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: LoginClient,
+    onSuccess: () => {
+      router.replace("/dashboard");
+    },
+    onError: (error: Error) => {
+      alert(error.message);
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,7 +32,7 @@ export default function Login() {
     },
     validationSchema: toFormikValidationSchema(loginSchema),
     onSubmit: (values) => {
-      console.log(values);
+      mutate(values);
     },
   });
 
@@ -59,7 +74,9 @@ export default function Login() {
             }
           />
 
-          <CustomButton type="submit">Sign In</CustomButton>
+          <CustomButton type="submit" disabled={isPending}>
+            Sign In
+          </CustomButton>
         </form>
       </div>
 
