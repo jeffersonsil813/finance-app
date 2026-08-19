@@ -15,7 +15,7 @@ export async function POST(request: Request) {
       typeof year !== "number"
     ) {
       return NextResponse.json(
-        { message: "Month and year are required and must be numbers" },
+        { error: "Month and year are required and must be numbers" },
         { status: 400 },
       );
     }
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
 
     if (transactions.length === 0) {
       return NextResponse.json(
-        { message: "No transactions found for this period" },
+        { error: "No transactions found for this period" },
         { status: 404 },
       );
     }
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

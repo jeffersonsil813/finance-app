@@ -24,7 +24,7 @@ export async function GET() {
     }
 
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       const flattened = z.flattenError(validation.error);
 
       return NextResponse.json(
-        { errors: flattened.fieldErrors },
+        { error: flattened.fieldErrors },
         { status: 400 },
       );
     }
@@ -61,7 +61,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

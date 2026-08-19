@@ -33,7 +33,7 @@ export async function GET() {
     return NextResponse.json({ incomeType });
   } catch (error) {
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

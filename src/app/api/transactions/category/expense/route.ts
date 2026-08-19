@@ -56,7 +56,7 @@ export async function GET() {
     return NextResponse.json({ expenseType });
   } catch (error) {
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

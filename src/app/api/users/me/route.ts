@@ -17,14 +17,14 @@ export async function PATCH(request: Request) {
     if (!validation.success) {
       const flattened = z.flattenError(validation.error);
       return NextResponse.json(
-        { errors: flattened.fieldErrors },
+        { error: flattened.fieldErrors },
         { status: 400 },
       );
     }
 
     if (Object.keys(validation.data).length === 0) {
       return NextResponse.json(
-        { message: "No fields provided to update" },
+        { error: "No fields provided to update" },
         { status: 400 },
       );
     }
@@ -53,7 +53,7 @@ export async function PATCH(request: Request) {
     }
 
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

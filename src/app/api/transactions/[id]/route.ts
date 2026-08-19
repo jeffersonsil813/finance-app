@@ -16,7 +16,7 @@ async function findOwnedTransaction(transactionId: string, userId: string) {
   if (!transaction) {
     return {
       error: NextResponse.json(
-        { message: "Transaction not found" },
+        { error: "Transaction not found" },
         { status: 404 },
       ),
     };
@@ -24,7 +24,7 @@ async function findOwnedTransaction(transactionId: string, userId: string) {
 
   if (transaction.userId !== userId) {
     return {
-      error: NextResponse.json({ message: "Forbidden" }, { status: 403 }),
+      error: NextResponse.json({ error: "Forbidden" }, { status: 403 }),
     };
   }
 
@@ -53,7 +53,7 @@ export async function DELETE(_request: Request, { params }: RequestParams) {
     }
 
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }
@@ -70,14 +70,14 @@ export async function PATCH(request: Request, { params }: RequestParams) {
     if (!validation.success) {
       const flattened = z.flattenError(validation.error);
       return NextResponse.json(
-        { errors: flattened.fieldErrors },
+        { error: flattened.fieldErrors },
         { status: 400 },
       );
     }
 
     if (Object.keys(validation.data).length === 0) {
       return NextResponse.json(
-        { message: "No fields provided to update" },
+        { error: "No fields provided to update" },
         { status: 400 },
       );
     }
@@ -103,7 +103,7 @@ export async function PATCH(request: Request, { params }: RequestParams) {
     }
 
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

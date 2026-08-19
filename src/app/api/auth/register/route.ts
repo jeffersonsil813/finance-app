@@ -15,7 +15,7 @@ export async function POST(request: Request) {
       const flattened = z.flattenError(validation.error);
 
       return NextResponse.json(
-        { errors: flattened.fieldErrors },
+        { error: flattened.fieldErrors },
         { status: 400 },
       );
     }

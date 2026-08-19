@@ -3,11 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
-const invalidCredentials = NextResponse.json(
-  { error: "Invalid Credentials" },
-  { status: 401 },
-);
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -23,13 +18,19 @@ export async function POST(request: Request) {
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      return invalidCredentials;
+      return NextResponse.json(
+        { error: "Invalid Credentials" },
+        { status: 401 },
+      );
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return invalidCredentials;
+      return NextResponse.json(
+        { error: "Invalid Credentials" },
+        { status: 401 },
+      );
     }
 
     const jwtSecret = process.env.JWT_SECRET!;
