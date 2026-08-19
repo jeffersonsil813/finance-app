@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
 export default function Login() {
@@ -21,7 +22,7 @@ export default function Login() {
       router.replace("/dashboard");
     },
     onError: (error: Error) => {
-      alert(error.message);
+      toast.error(error.message);
     },
   });
 
