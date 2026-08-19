@@ -44,7 +44,7 @@ export async function DELETE(_request: Request, { params }: RequestParams) {
     });
 
     return NextResponse.json(
-      { message: "Transaction deleted successfully" },
+      { message: "Transaction successfully deleted!" },
       { status: 200 },
     );
   } catch (error) {
@@ -92,7 +92,7 @@ export async function PATCH(request: Request, { params }: RequestParams) {
 
     return NextResponse.json(
       {
-        message: "Transaction updated successfully",
+        message: "Transaction successfully updated!",
         transaction: updatedTransaction,
       },
       { status: 200 },

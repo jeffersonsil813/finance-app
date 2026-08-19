@@ -30,12 +30,13 @@ const Register = () => {
     validationSchema: toFormikValidationSchema(registerSchema),
     onSubmit: (values) => {
       toast.promise(
-        mutateAsync(values).then(() => {
+        mutateAsync(values).then((data) => {
           router.push("/");
+          return data;
         }),
         {
-          loading: "Creating account...",
-          success: "Account created successfully!",
+          loading: "Loading...",
+          success: (data) => data?.message,
           error: (err: Error) => err.message,
         },
       );

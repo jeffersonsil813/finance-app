@@ -44,7 +44,7 @@ export async function PATCH(request: Request) {
     });
 
     return NextResponse.json(
-      { message: "User updated successfully" },
+      { message: "User successfully updated!" },
       { status: 200 },
     );
   } catch (error) {
@@ -70,7 +70,7 @@ export async function DELETE() {
 
     const response = NextResponse.json(
       {
-        message: "User deleted successful",
+        message: "User successfully deleted!",
       },
       { status: 200 },
     );

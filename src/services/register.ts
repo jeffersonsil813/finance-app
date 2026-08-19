@@ -3,8 +3,12 @@ import { User } from "../../prisma/generated/client";
 
 type RegisterData = Omit<User, "id">;
 
+type RegisterResponse = {
+  message: string;
+};
+
 export async function RegisterClient(newUserData: RegisterData) {
-  return api("/api/auth/register", {
+  return api<RegisterResponse>("/api/auth/register", {
     method: "POST",
     body: newUserData,
   });
