@@ -58,3 +58,19 @@ export const loginSchema = baseUserSchema
       })
       .min(1, "Password is required"),
   });
+
+export const registerSchema = baseUserSchema
+  .extend({
+    confirmPassword: z
+      .string({
+        error: (issue) =>
+          issue.input === undefined
+            ? "Confirm password is required"
+            : "Confirm password must be a valid string",
+      })
+      .min(1, "Confirm password is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
