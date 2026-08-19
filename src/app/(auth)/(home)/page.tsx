@@ -16,14 +16,8 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 export default function Login() {
   const router = useRouter();
 
-  const { mutate, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: LoginClient,
-    onSuccess: () => {
-      router.replace("/dashboard");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message);
-    },
   });
 
   const formik = useFormik({
@@ -33,7 +27,16 @@ export default function Login() {
     },
     validationSchema: toFormikValidationSchema(loginSchema),
     onSubmit: (values) => {
-      mutate(values);
+      toast.promise(
+        mutateAsync(values).then(() => {
+          router.replace("/dashboard");
+        }),
+        {
+          loading: "Loading...",
+          success: "Welcome!",
+          error: (err: Error) => err.message,
+        },
+      );
     },
   });
 
