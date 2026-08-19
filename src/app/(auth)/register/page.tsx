@@ -1,5 +1,6 @@
 import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
+import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
 import Link from "next/link";
 
@@ -28,23 +29,21 @@ const Register = () => {
             }}
           />
 
-          <CustomField
+          <PasswordField
             fieldLabelProps={{ htmlFor: "password", children: "Password" }}
             inputProps={{
               id: "password",
-              type: "password",
               placeholder: "Password",
             }}
           />
 
-          <CustomField
+          <PasswordField
             fieldLabelProps={{
               htmlFor: "confirm-password",
               children: "Confirm Password",
             }}
             inputProps={{
               id: "confirm-password",
-              type: "password",
               placeholder: "Repeat password",
             }}
           />

@@ -1,5 +1,6 @@
 import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
+import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
 import Link from "next/link";
 
@@ -19,11 +20,10 @@ export default function Login() {
             }}
           />
 
-          <CustomField
+          <PasswordField
             fieldLabelProps={{ htmlFor: "password", children: "Password" }}
             inputProps={{
               id: "password",
-              type: "password",
               placeholder: "Password",
             }}
           />

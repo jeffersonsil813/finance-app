@@ -1,7 +1,7 @@
 import { Field, FieldDescription, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 
-interface CustomFieldProps {
+export interface CustomFieldProps {
   fieldLabelProps: React.ComponentProps<typeof FieldLabel>;
   inputProps: React.ComponentProps<typeof Input>;
   fieldDescriptionProps?: React.ComponentProps<typeof FieldDescription>;
