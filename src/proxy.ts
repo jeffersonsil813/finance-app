@@ -3,7 +3,11 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET);
 
-const PUBLIC_API_ROUTES = ["/api/auth/login", "/api/auth/register"];
+const PUBLIC_API_ROUTES = [
+  "/api/auth/login",
+  "/api/auth/register",
+  "/api/auth/logout",
+];
 
 export async function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
