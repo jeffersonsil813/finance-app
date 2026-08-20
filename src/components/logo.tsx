@@ -6,7 +6,7 @@ const Logo = () => {
       <div className="bg-light-green rounded-full w-8 h-8 flex items-center justify-center">
         <TrendingUp className="text-white" width={18} height={18} />
       </div>
-      <h1 className="font-semibold text-xl">Finance</h1>
+      <h1 className="font-semibold text-lg text-black">Finance</h1>
     </div>
   );
 };
