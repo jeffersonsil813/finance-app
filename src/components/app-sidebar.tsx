@@ -1,8 +1,7 @@
 "use client";
 
-import { CreditCard, House, LogOut, Plus, User } from "lucide-react";
+import { LogOut, Plus } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -14,17 +13,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Logo from "./logo";
 import CustomButton from "./custom-button";
-
-const items = [
-  { title: "Dashboard", url: "/dashboard", icon: House },
-  { title: "Transactions", url: "/transactions", icon: CreditCard },
-  { title: "Profile", url: "/profile", icon: User },
-];
+import Logo from "./logo";
 
 const defaultStyle = "py-4 px-6 bg-white";
 
@@ -45,7 +39,7 @@ const AppSidebar = () => {
         <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
-              {items.map((item) => {
+              {navItems.map((item) => {
                 const isActive = pathname === item.url;
 
                 return (

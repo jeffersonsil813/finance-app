@@ -1,4 +1,5 @@
 import AppSidebar from "@/components/app-sidebar";
+import BottomNav from "@/components/bottom-nav";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
@@ -6,7 +7,11 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
     <SidebarProvider>
       <div className="flex gap-4 w-full">
         <AppSidebar />
-        <div className="flex flex-1 py-7 px-40 justify-center">{children}</div>
+        <div className="flex flex-1 p-7 pb-24 md:p-7 xl:px-40 justify-center">
+          {children}
+        </div>
+
+        <BottomNav />
       </div>
     </SidebarProvider>
   );
