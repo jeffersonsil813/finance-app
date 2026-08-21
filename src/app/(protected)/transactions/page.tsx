@@ -6,12 +6,13 @@ import { getTransactions } from "@/services/transaction";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Type } from "../../../../prisma/generated/enums";
+import PageFilters from "./_components/page-filters";
 
 const Transactions = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"ALL" | Type>("ALL");
 
-  const { data: transactionList } = useQuery({
+  const { data: transactionData } = useQuery({
     queryKey: ["transactions", search, filter],
     queryFn: async () => {
       const params = { search, filter };
@@ -23,6 +24,14 @@ const Transactions = () => {
     <main className="w-full max-w-5xl flex flex-col space-y-4">
       <PageHeader />
       <SearchForm onSearch={(value) => setSearch(value)} />
+
+      <div className="flex items-center justify-between">
+        <PageFilters
+          currentFilter={filter}
+          onFilterChange={(value) => setFilter(value)}
+        />
+        <span className="text-xs text-gray-400">{`${transactionData?.transactions?.length} items`}</span>
+      </div>
     </main>
   );
 };
