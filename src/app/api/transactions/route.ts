@@ -1,23 +1,55 @@
 import { getUserId, UnauthorizedError } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { createTransactionSchema } from "@/schemas/transaction";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { Type } from "../../../../prisma/generated/enums";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const userId = await getUserId();
 
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        userId,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const { searchParams } = new URL(request.url);
+    const typeParam = searchParams.get("type")?.toUpperCase();
+    const search = searchParams.get("search");
 
-    return NextResponse.json({ transactions });
+    const isValidType = Object.values(Type).includes(typeParam as Type);
+
+    const whereClause: any = {
+      userId,
+      ...(isValidType && { type: typeParam as Type }),
+      ...(search && {
+        description: {
+          contains: search,
+          mode: "insensitive",
+        },
+      }),
+    };
+
+    const [transactions, totalIn, totalOut] = await Promise.all([
+      prisma.transaction.findMany({
+        where: whereClause,
+        orderBy: {
+          createdAt: "desc",
+        },
+      }),
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { userId, type: "INCOME" },
+      }),
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { userId, type: "EXPENSE" },
+      }),
+    ]);
+
+    return NextResponse.json({
+      summary: {
+        totalIn: totalIn._sum.amount || 0,
+        totalOut: totalOut._sum.amount || 0,
+      },
+      transactions,
+    });
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       return NextResponse.json({ error: error.message }, { status: 401 });
