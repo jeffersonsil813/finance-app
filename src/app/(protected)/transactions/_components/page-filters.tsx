@@ -7,13 +7,13 @@ const options = [
     label: "Income",
     value: Type.INCOME,
     styleWhenActive:
-      "bg-[color-mix(in_srgb,var(--color-light-green)_15%,white)] text-light-green",
+      "bg-[color-mix(in_srgb,var(--color-green-600)_15%,white)] text-green-600",
   },
   {
     label: "Expenses",
     value: Type.EXPENSE,
     styleWhenActive:
-      "bg-[color-mix(in_srgb,var(--color-app-red)_15%,white)] text-app-red",
+      "bg-[color-mix(in_srgb,var(--color-red-600)_15%,white)] text-red-600",
   },
 ];
 

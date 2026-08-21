@@ -6,12 +6,8 @@
 
 @theme {
   --color-app-background: #F2F2EE;
-  --color-white: #ffffff;
   --color-black: #111118;
   --color-gray-field: #F9F9F7;
-  --color-light-green: #16A34A;
-  --color-gray-subtitle: #6B7280;
-  --color-app-red: #DC2626;
 }
 
 @theme inline {

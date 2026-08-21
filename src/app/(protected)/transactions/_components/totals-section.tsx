@@ -22,14 +22,14 @@ const buildTotals = (totalIn: number, totalOut: number): TotalItem[] => [
     value: totalIn,
     type: Type.INCOME,
     cardStyle: "bg-green-50 border border-green-200 ring-0",
-    valueColor: "text-light-green",
+    valueColor: "text-green-600",
   },
   {
     label: "Total Out",
     value: totalOut,
     type: Type.EXPENSE,
     cardStyle: "bg-red-50 border border-red-200 ring-0",
-    valueColor: "text-app-red",
+    valueColor: "text-red-600",
   },
 ];
 
@@ -41,7 +41,7 @@ const TotalCard = ({
 }: Omit<TotalItem, "type">) => (
   <Card className={cn("rounded-2xl px-3 pt-1 pb-2 flex-1", cardStyle)}>
     <CardContent className="p-0 space-y-1">
-      <dt className="text-[10px] text-gray-subtitle uppercase">{label}</dt>
+      <dt className="text-[10px] text-gray-500 uppercase">{label}</dt>
       <dd className={cn("text-[14px] font-bold", valueColor)}>
         {formatCurrency(value)}
       </dd>

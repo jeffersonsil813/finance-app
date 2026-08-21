@@ -22,12 +22,12 @@ const CustomField = ({
         {fieldLabelProps.children}
       </FieldLabel>
       <Input
-        className="bg-gray-field rounded-full h-10 focus-visible:border-light-green focus-visible:ring-light-green/20 focus-visible:ring-2"
+        className="bg-gray-field rounded-full h-10 focus-visible:border-green-600 focus-visible:ring-green-600/20 focus-visible:ring-2"
         {...inputProps}
       />
       {fieldDescriptionProps && (
         <FieldDescription
-          className={errorInField ? "text-app-red" : ""}
+          className={errorInField ? "text-red-600" : ""}
           {...restDescriptionProps}
         >
           {fieldDescriptionProps.children}

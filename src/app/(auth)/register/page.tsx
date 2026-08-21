@@ -128,7 +128,7 @@ const Register = () => {
         <Subtitle text="Already have an account?" />
         <Link
           href="/"
-          className="text-[16px] text-light-green border-b border-transparent hover:border-light-green transition cursor-default"
+          className="text-[16px] text-green-600 border-b border-transparent hover:border-green-600 transition cursor-default"
         >
           Sign in
         </Link>

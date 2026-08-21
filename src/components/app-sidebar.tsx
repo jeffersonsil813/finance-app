@@ -58,8 +58,8 @@ const AppSidebar = () => {
                       className={cn(
                         "rounded-full h-10 px-3 transition-colors",
                         isActive
-                          ? "text-light-green! bg-green-50!"
-                          : "text-gray-subtitle bg-transparent hover:bg-gray-field hover:text-black",
+                          ? "text-green-600! bg-green-50!"
+                          : "text-gray-500 bg-transparent hover:bg-gray-field hover:text-black",
                       )}
                     >
                       <item.icon className="w-5! h-5!" />
@@ -85,7 +85,7 @@ const AppSidebar = () => {
             <SidebarMenuButton
               disabled={isPending}
               onClick={handleLogout}
-              className="cursor-pointer rounded-full h-10 px-3 transition-colors text-gray-subtitle bg-transparent hover:bg-red-50 hover:text-app-red active:bg-red-50 active:text-app-red"
+              className="cursor-pointer rounded-full h-10 px-3 transition-colors text-gray-500 bg-transparent hover:bg-red-50 hover:text-red-600 active:bg-red-50 active:text-red-600"
             >
               <LogOut className="w-5! h-5!" />
               <span className="font-medium text-[14px]">Log out</span>

@@ -30,14 +30,14 @@ const PasswordField = ({
       <div className="relative">
         <Input
           type={fieldType}
-          className="bg-gray-field rounded-full h-10 focus-visible:border-light-green focus-visible:ring-light-green/20 focus-visible:ring-2 pr-10"
+          className="bg-gray-field rounded-full h-10 focus-visible:border-green-600 focus-visible:ring-green-600/20 focus-visible:ring-2 pr-10"
           {...inputProps}
         />
 
         <button
           type="button"
           onClick={toggleShowPassword}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-subtitle/70 hover:text-gray-subtitle transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500/70 hover:text-gray-500 transition-colors"
           tabIndex={-1}
         >
           {showPassword ? (
@@ -50,7 +50,7 @@ const PasswordField = ({
 
       {fieldDescriptionProps && (
         <FieldDescription
-          className={errorInField ? "text-app-red" : ""}
+          className={errorInField ? "text-red-600" : ""}
           {...restDescriptionProps}
         >
           {fieldDescriptionProps.children}

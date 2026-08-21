@@ -20,9 +20,7 @@ const BottomNav = () => {
             href={item.url}
             className={cn(
               "flex flex-col items-center justify-center gap-1 transition-colors",
-              isActive
-                ? "text-light-green"
-                : "text-gray-subtitle hover:text-black",
+              isActive ? "text-green-600" : "text-gray-500 hover:text-black",
             )}
           >
             <Icon className="h-5 w-5" />

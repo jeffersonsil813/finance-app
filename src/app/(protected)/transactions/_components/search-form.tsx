@@ -41,7 +41,7 @@ const SearchForm = ({ onSearch }: SearchFormProps) => {
           id="search"
           type="text"
           placeholder="Search transactions..."
-          className="h-10 rounded-full pl-11 pr-4 py-2 bg-white placeholder:text-gray-400 text-black focus-visible:border-light-green focus-visible:ring-light-green/20 focus-visible:ring-2"
+          className="h-10 rounded-full pl-11 pr-4 py-2 bg-white placeholder:text-gray-400 text-black focus-visible:border-green-600 focus-visible:ring-green-600/20 focus-visible:ring-2"
           value={formik.values.search}
           onChange={formik.handleChange}
         />
