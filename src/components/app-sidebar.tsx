@@ -13,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useLogout } from "@/hooks/use-logout";
 import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -24,6 +25,7 @@ const defaultStyle = "py-4 px-6 bg-white";
 
 const AppSidebar = () => {
   const pathname = usePathname();
+  const { handleLogout, isPending } = useLogout();
 
   return (
     <Sidebar variant="floating">
@@ -80,7 +82,11 @@ const AppSidebar = () => {
       <SidebarFooter className={cn(defaultStyle, "border-t rounded-b-2xl")}>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton className="cursor-pointer rounded-full h-10 px-3 transition-colors text-gray-subtitle bg-transparent hover:bg-red-50 hover:text-app-red active:bg-red-50 active:text-app-red">
+            <SidebarMenuButton
+              disabled={isPending}
+              onClick={handleLogout}
+              className="cursor-pointer rounded-full h-10 px-3 transition-colors text-gray-subtitle bg-transparent hover:bg-red-50 hover:text-app-red active:bg-red-50 active:text-app-red"
+            >
               <LogOut className="w-5! h-5!" />
               <span className="font-medium text-[14px]">Log out</span>
             </SidebarMenuButton>
