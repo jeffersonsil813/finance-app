@@ -1,7 +1,7 @@
 "use client";
 
+import PageHeader from "@/app/(protected)/transactions/_components/page-header";
 import SearchForm from "@/app/(protected)/transactions/_components/search-form";
-import TransactionsPageHeader from "@/app/(protected)/transactions/_components/transactions-page-header";
 import { getTransactions } from "@/services/transaction";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -21,7 +21,7 @@ const Transactions = () => {
 
   return (
     <main className="w-full max-w-5xl flex flex-col space-y-4">
-      <TransactionsPageHeader />
+      <PageHeader />
       <SearchForm onSearch={(value) => setSearch(value)} />
     </main>
   );

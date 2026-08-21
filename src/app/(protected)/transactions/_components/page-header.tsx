@@ -1,7 +1,7 @@
 import CustomButton from "@/components/custom-button";
 import { Plus } from "lucide-react";
 
-const TransactionsPageHeader = () => {
+const PageHeader = () => {
   return (
     <div className="flex justify-between items-center">
       <h1 className="text-[20px] font-semibold">Transactions</h1>
@@ -12,4 +12,4 @@ const TransactionsPageHeader = () => {
   );
 };
 
-export default TransactionsPageHeader;
+export default PageHeader;
