@@ -1,5 +1,6 @@
 "use client";
 
+import ListSection from "@/app/(protected)/transactions/_components/list-section";
 import PageFilters from "@/app/(protected)/transactions/_components/page-filters";
 import PageHeader from "@/app/(protected)/transactions/_components/page-header";
 import SearchForm from "@/app/(protected)/transactions/_components/search-form";
@@ -39,6 +40,8 @@ const Transactions = () => {
         totalOut={transactionData?.summary?.totalOut || 0}
         filter={filter}
       />
+
+      <ListSection transactions={transactionData?.transactions || []} />
     </main>
   );
 };
