@@ -11,3 +11,11 @@ export const formatCurrency = (value: number) => {
     currency: "BRL",
   }).format(value);
 };
+
+export const formatDate = (date: Date): string => {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+};
