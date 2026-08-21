@@ -38,12 +38,13 @@ const TotalCard = ({
   value,
   cardStyle,
   valueColor,
-}: Omit<TotalItem, "type">) => (
+  type,
+}: TotalItem) => (
   <Card className={cn("rounded-2xl px-3 pt-1 pb-2 flex-1", cardStyle)}>
     <CardContent className="p-0 space-y-1">
       <dt className="text-[10px] text-gray-500 uppercase">{label}</dt>
       <dd className={cn("text-[14px] font-bold", valueColor)}>
-        {formatCurrency(value)}
+        {`${type === "INCOME" ? "+" : "-"}${formatCurrency(value)}`}
       </dd>
     </CardContent>
   </Card>
@@ -61,6 +62,7 @@ const TotalsSection = ({ totalIn, totalOut, filter }: TotalsSectionProps) => {
           key={item.label}
           label={item.label}
           value={item.value}
+          type={item.type}
           cardStyle={item.cardStyle}
           valueColor={item.valueColor}
         />
