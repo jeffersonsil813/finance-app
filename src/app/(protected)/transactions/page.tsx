@@ -1,12 +1,13 @@
 "use client";
 
+import PageFilters from "@/app/(protected)/transactions/_components/page-filters";
 import PageHeader from "@/app/(protected)/transactions/_components/page-header";
 import SearchForm from "@/app/(protected)/transactions/_components/search-form";
+import TotalsSection from "@/app/(protected)/transactions/_components/totals-section";
 import { getTransactions } from "@/services/transaction";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Type } from "../../../../prisma/generated/enums";
-import PageFilters from "./_components/page-filters";
 
 const Transactions = () => {
   const [search, setSearch] = useState("");
@@ -32,6 +33,12 @@ const Transactions = () => {
         />
         <span className="text-xs text-gray-400">{`${transactionData?.transactions?.length} items`}</span>
       </div>
+
+      <TotalsSection
+        totalIn={transactionData?.summary?.totalIn || 0}
+        totalOut={transactionData?.summary?.totalOut || 0}
+        filter={filter}
+      />
     </main>
   );
 };
