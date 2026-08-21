@@ -28,7 +28,7 @@ const AppSidebar = () => {
   const { handleLogout, isPending } = useLogout();
 
   return (
-    <Sidebar variant="floating">
+    <Sidebar variant="floating" className="pr-0">
       <SidebarHeader className={cn(defaultStyle, "border-b rounded-t-2xl")}>
         <Link href="/dashboard" className="w-fit cursor-default">
           <Logo />
