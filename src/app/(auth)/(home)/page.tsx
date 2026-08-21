@@ -5,7 +5,7 @@ import CustomField from "@/components/custom-field";
 import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
 import { loginSchema } from "@/schemas/user";
-import { LoginClient } from "@/services/login";
+import { LoginClient } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Link from "next/link";
