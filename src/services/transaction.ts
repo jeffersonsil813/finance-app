@@ -2,7 +2,7 @@ import { api } from "@/lib/api-client";
 import { Transaction } from "../../prisma/generated/client";
 import { Type } from "../../prisma/generated/enums";
 
-interface TransactionsResponse {
+interface GetTransactionsResponse {
   summary: {
     totalIn: number;
     totalOut: number;
@@ -24,15 +24,20 @@ export async function getTransactions(params?: TransactionsParams) {
 
   const url = `/api/transactions${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
 
-  return api<TransactionsResponse>(url, {
+  return api<GetTransactionsResponse>(url, {
     method: "GET",
   });
 }
 
 type NewTransactionData = Omit<Transaction, "id" | "userId" | "createdAt">;
 
+interface NewTransactionResponse {
+  message: string;
+  transaction: Transaction;
+}
+
 export async function createTransaction(newTransaction: NewTransactionData) {
-  return api("/api/transactions", {
+  return api<NewTransactionResponse>("/api/transactions", {
     method: "POST",
     body: newTransaction,
   });
@@ -44,7 +49,7 @@ export async function updateTransaction(
 ) {
   const url = `/api/transactions/${transactionId}`;
 
-  return api(url, {
+  return api<NewTransactionResponse>(url, {
     method: "PATCH",
     body: updatedTransaction,
   });
