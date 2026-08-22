@@ -31,12 +31,14 @@ const Register = () => {
     onSubmit: (values) => {
       toast.promise(
         mutateAsync(values).then((data) => {
-          router.push("/");
           return data;
         }),
         {
           loading: "Loading...",
-          success: (data) => data?.message,
+          success: (data) => {
+            router.push("/");
+            return data?.message;
+          },
           error: (err: Error) => err.message,
         },
       );

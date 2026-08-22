@@ -27,16 +27,14 @@ export default function Login() {
     },
     validationSchema: toFormikValidationSchema(loginSchema),
     onSubmit: (values) => {
-      toast.promise(
-        mutateAsync(values).then(() => {
+      toast.promise(mutateAsync(values), {
+        loading: "Loading...",
+        success: () => {
           router.replace("/dashboard");
-        }),
-        {
-          loading: "Loading...",
-          success: "Welcome!",
-          error: (err: Error) => err.message,
+          return "Welcome!";
         },
-      );
+        error: (err: Error) => err.message,
+      });
     },
   });
 
