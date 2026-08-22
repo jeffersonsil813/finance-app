@@ -14,7 +14,7 @@ const PageContent = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"ALL" | Type>("ALL");
 
-  const { data: transactionData, isLoading } = useQuery({
+  const { data: transactionData } = useQuery({
     queryKey: ["transactions", search, filter],
     queryFn: async () => {
       const params = { search, filter };
