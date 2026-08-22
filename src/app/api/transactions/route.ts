@@ -86,7 +86,13 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ transaction: newTransaction }, { status: 201 });
+    return NextResponse.json(
+      {
+        message: "Transaction created successfully!",
+        transaction: newTransaction,
+      },
+      { status: 201 },
+    );
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       return NextResponse.json({ error: error.message }, { status: 401 });
