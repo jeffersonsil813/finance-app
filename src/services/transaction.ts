@@ -28,3 +28,32 @@ export async function getTransactions(params?: TransactionsParams) {
     method: "GET",
   });
 }
+
+type NewTransactionData = Omit<Transaction, "id" | "userId" | "createdAt">;
+
+export async function createTransaction(newTransaction: NewTransactionData) {
+  return api("/api/transactions", {
+    method: "POST",
+    body: newTransaction,
+  });
+}
+
+export async function updateTransaction(
+  transactionId: string,
+  updatedTransaction: Partial<Transaction>,
+) {
+  const url = `/api/transactions/${transactionId}`;
+
+  return api(url, {
+    method: "PATCH",
+    body: updatedTransaction,
+  });
+}
+
+export async function deleteTransaction(transactionId: string) {
+  const url = `/api/transactions/${transactionId}`;
+
+  return api(url, {
+    method: "DELETE",
+  });
+}
