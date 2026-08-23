@@ -64,7 +64,7 @@ const CategorySelector = ({
 
   return (
     <Field>
-      <h3>Category</h3>
+      <h3 className="font-medium text-black">Category</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 px-2">
         {options.map(
           ({ icon: OpIcon, label, value: OpValue, representativeColor }) => {
@@ -201,11 +201,12 @@ const TransactionForm = ({
   const isPending = isSaving || isDeleting;
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} className="space-y-5">
       <Tabs
         id="type"
         value={formik.values.type}
         onValueChange={handleTypeChange}
+        className="space-y-3"
       >
         <TabsList className="w-full rounded-full bg-[#F5F5F2] p-1.5 h-10.25!">
           {TRANSACTION_TYPE_OPTIONS.map(({ label, value }) => {
@@ -255,7 +256,7 @@ const TransactionForm = ({
           <TabsContent
             key={value}
             value={value}
-            className="flex flex-col gap-1 overflow-y-auto max-h-100"
+            className="flex flex-col gap-1"
           >
             <CategorySelector
               type={value as Type}
@@ -275,27 +276,34 @@ const TransactionForm = ({
         />
       </Tabs>
 
-      <div className="flex items-center gap-1 flex-wrap">
+      <div className="flex flex-wrap gap-2 items-center">
         {isEditing && (
           <Button
             type="button"
             onClick={handleDeleteTransaction}
-            disabled={isPending}
-            className="flex items-center justify-center cursor-pointer bg-red-50 hover:bg-red-100 text-red-600 transition-colors rounded-full w-10 h-10 border border-red-100 disabled:opacity-50"
+            disabled={isDeleting}
+            className="order-1 shrink-0 flex items-center justify-center cursor-pointer bg-red-50 hover:bg-red-100 text-red-600 transition-colors rounded-full w-10 h-10 border border-red-100"
           >
             <Trash2 className="w-4 h-4" />
           </Button>
         )}
 
-        <Button
+        <CustomButton
           type="button"
-          className="cursor-pointer"
+          variant="outline"
+          className="order-2 flex-1 min-w-0"
           onClick={onSuccess}
           disabled={isPending}
         >
           Cancel
-        </Button>
-        <CustomButton type="submit" disabled={isPending}>
+        </CustomButton>
+
+        <CustomButton
+          type="submit"
+          variant="primary"
+          className="order-3 basis-full md:basis-0 md:flex-1"
+          disabled={isPending}
+        >
           {isEditing ? "Save Changes" : "Add Transaction"}
         </CustomButton>
       </div>

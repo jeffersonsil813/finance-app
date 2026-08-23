@@ -22,7 +22,7 @@ const TransactionModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md p-6">
+      <DialogContent className="sm:max-w-md overflow-y-auto max-h-[90%] p-6">
         <DialogHeader>
           <DialogTitle className="text-black">
             {isEditing ? "Edit Transaction" : "New Transaction"}
