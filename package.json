@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.44",
+    "@base-ui-components/react": "1.0.0-rc.0",
     "@base-ui/react": "^1.7.0",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
@@ -18,6 +19,7 @@
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
     "formik": "^2.4.9",
     "jose": "^6.2.9",
     "jsonwebtoken": "^9.0.3",
@@ -25,6 +27,7 @@
     "next": "16.3.1",
     "pg": "^8.23.0",
     "react": "19.2.8",
+    "react-day-picker": "^10.0.1",
     "react-dom": "19.2.8",
     "react-hot-toast": "^2.6.0",
     "shadcn": "^4.18.0",
