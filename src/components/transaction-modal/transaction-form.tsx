@@ -178,8 +178,10 @@ const TransactionForm = ({
   };
 
   const handleChangeCategory = (field: CategoryFieldType, value: string) => {
-    formik.setFieldValue(field, value);
-    formik.setFieldTouched(field, true);
+    formik.setFieldValue(field, value).then(() => {
+      formik.setFieldTouched(field, true);
+      formik.validateForm();
+    });
   };
 
   const handleTypeChange = (value: string) => {
