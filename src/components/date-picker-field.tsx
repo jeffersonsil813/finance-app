@@ -46,8 +46,8 @@ const DatePickerField = ({
                 !value ? "text-muted-foreground" : ""
               } ${
                 errorInField
-                  ? "border-red-600"
-                  : "focus-visible:border-green-600 focus-visible:ring-green-600/20 focus-visible:ring-2"
+                  ? ""
+                  : "focus-visible:border-green-600! focus-visible:ring-green-600/20!"
               }`}
             />
           }

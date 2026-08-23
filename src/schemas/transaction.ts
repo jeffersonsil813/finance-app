@@ -6,13 +6,13 @@ import {
 } from "../../prisma/generated/enums";
 
 const baseTransactionSchema = z.object({
-  description: z.string().optional(),
+  description: z.string().nullish(),
   amount: z.coerce
     .number({
       error: (issue) =>
         issue.input === undefined
           ? "Amount is required"
-          : "Amount must be a valid number",
+          : "Amount must be a valid number and greater than 0",
     })
     .positive({ error: "Amount must be greater than 0" }),
   type: z.enum(Type, {
@@ -25,12 +25,12 @@ const baseTransactionSchema = z.object({
     .enum(ExpenseCategory, {
       error: "Invalid expense category",
     })
-    .optional(),
+    .nullish(),
   incomeCategory: z
     .enum(IncomeCategory, {
       error: "Invalid income category",
     })
-    .optional(),
+    .nullish(),
   date: z.coerce
     .date({
       error: (issue) =>
@@ -60,9 +60,11 @@ export const createTransactionSchema = baseTransactionSchema.refine(
   },
   {
     message:
-      "The category must match the transaction type (expenseCategory for EXPENSE, incomeCategory for INCOME).",
+      "The category must match the transaction type (expense category for expense, income category for income)",
     path: ["expenseCategory"],
   },
 );
 
 export const updateTransactionSchema = baseTransactionSchema.partial();
+
+export type TransactionFormValues = z.infer<typeof createTransactionSchema>;

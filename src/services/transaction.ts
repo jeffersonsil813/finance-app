@@ -29,7 +29,10 @@ export async function getTransactions(params?: TransactionsParams) {
   });
 }
 
-type NewTransactionData = Omit<Transaction, "id" | "userId" | "createdAt">;
+export type NewTransactionData = Omit<
+  Transaction,
+  "id" | "userId" | "createdAt"
+>;
 
 interface NewTransactionResponse {
   message: string;
@@ -45,7 +48,7 @@ export async function createTransaction(newTransaction: NewTransactionData) {
 
 export async function updateTransaction(
   transactionId: string,
-  updatedTransaction: Partial<Transaction>,
+  updatedTransaction: NewTransactionData,
 ) {
   const url = `/api/transactions/${transactionId}`;
 

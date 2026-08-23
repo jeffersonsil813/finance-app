@@ -2,6 +2,7 @@
 
 import { LogOut, Plus } from "lucide-react";
 
+import TransactionModal from "@/components/transaction-modal/transaction-modal";
 import {
   Sidebar,
   SidebarContent,
@@ -18,6 +19,7 @@ import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import CustomButton from "./custom-button";
 import Logo from "./logo";
 
@@ -26,6 +28,9 @@ const defaultStyle = "py-4 px-6 bg-white";
 const AppSidebar = () => {
   const pathname = usePathname();
   const { handleLogout, isPending } = useLogout();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenTransactionModal = () => setModalOpen(true);
 
   return (
     <Sidebar variant="floating" className="pr-0">
@@ -75,7 +80,9 @@ const AppSidebar = () => {
         </SidebarGroup>
 
         <div className="mt-auto pt-4 flex flex-col">
-          <CustomButton startIcon={Plus}>Add Transaction</CustomButton>
+          <CustomButton startIcon={Plus} onClick={handleOpenTransactionModal}>
+            Add Transaction
+          </CustomButton>
         </div>
       </SidebarContent>
 
@@ -93,6 +100,8 @@ const AppSidebar = () => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+
+      <TransactionModal onOpenChange={setModalOpen} open={modalOpen} />
     </Sidebar>
   );
 };

@@ -5,9 +5,11 @@ import PageFilters from "@/app/(protected)/transactions/_components/page-filters
 import PageHeader from "@/app/(protected)/transactions/_components/page-header";
 import SearchForm from "@/app/(protected)/transactions/_components/search-form";
 import TotalsSection from "@/app/(protected)/transactions/_components/totals-section";
+import TransactionModal from "@/components/transaction-modal/transaction-modal";
 import { getTransactions } from "@/services/transaction";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Transaction } from "../../../../../prisma/generated/browser";
 import { Type } from "../../../../../prisma/generated/enums";
 
 const PageContent = () => {
@@ -21,6 +23,15 @@ const PageContent = () => {
       return await getTransactions(params);
     },
   });
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
+
+  function handleItemClick(transaction: Transaction) {
+    setSelectedTransaction(transaction);
+    setModalOpen(true);
+  }
 
   return (
     <main className="w-full max-w-5xl flex flex-col space-y-4">
@@ -41,7 +52,16 @@ const PageContent = () => {
         filter={filter}
       />
 
-      <ListSection transactions={transactionData?.transactions || []} />
+      <ListSection
+        transactions={transactionData?.transactions || []}
+        onItemClick={handleItemClick}
+      />
+
+      <TransactionModal
+        onOpenChange={setModalOpen}
+        open={modalOpen}
+        transaction={selectedTransaction}
+      />
     </main>
   );
 };
