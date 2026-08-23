@@ -1,9 +1,29 @@
+import { cn } from "@/lib/utils";
 import { ButtonProps } from "@base-ui/react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { LucideIcon } from "lucide-react";
 import { ReactNode } from "react";
 import { Button } from "./ui/button";
 
-interface CustomButtonProps extends ButtonProps {
+const customButtonVariants = cva(
+  "flex items-center gap-2 h-10 rounded-full cursor-pointer transition-colors active:translate-y-0! active:scale-100! px-4",
+  {
+    variants: {
+      variant: {
+        primary:
+          "bg-green-600 text-white hover:bg-[color-mix(in_srgb,var(--color-green-600)_85%,black)]",
+        outline:
+          "border border-[#E5E5E0] bg-transparent text-[#6B7280] hover:bg-gray-field",
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+    },
+  },
+);
+
+interface CustomButtonProps
+  extends ButtonProps, VariantProps<typeof customButtonVariants> {
   children: ReactNode;
   startIcon?: LucideIcon;
   endIcon?: LucideIcon;
@@ -13,12 +33,14 @@ const CustomButton = ({
   children,
   startIcon: StartIcon,
   endIcon: EndIcon,
+  variant,
+  className,
   ...props
 }: CustomButtonProps) => {
   return (
     <Button
       type="button"
-      className="bg-green-600 text-white flex items-center gap-2 h-10 rounded-full cursor-pointer hover:bg-[color-mix(in_srgb,var(--color-green-600)_85%,black)] transition-colors active:translate-y-0! active:scale-100! px-4"
+      className={cn(customButtonVariants({ variant }), className)}
       {...props}
     >
       {StartIcon && <StartIcon className="w-4 h-4" />}
