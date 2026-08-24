@@ -15,31 +15,39 @@ export async function GET(request: NextRequest) {
 
     const isValidType = Object.values(Type).includes(typeParam as Type);
 
-    const whereClause: any = {
+    const searchClause = search
+      ? {
+          description: {
+            contains: search,
+            mode: "insensitive" as const,
+          },
+        }
+      : {};
+
+    const baseWhere = {
       userId,
+      ...searchClause,
+    };
+
+    const listWhere = {
+      ...baseWhere,
       ...(isValidType && { type: typeParam as Type }),
-      ...(search && {
-        description: {
-          contains: search,
-          mode: "insensitive",
-        },
-      }),
     };
 
     const [transactions, totalIn, totalOut] = await Promise.all([
       prisma.transaction.findMany({
-        where: whereClause,
+        where: listWhere,
         orderBy: {
           createdAt: "desc",
         },
       }),
       prisma.transaction.aggregate({
         _sum: { amount: true },
-        where: { userId, type: "INCOME" },
+        where: { ...baseWhere, type: "INCOME" },
       }),
       prisma.transaction.aggregate({
         _sum: { amount: true },
-        where: { userId, type: "EXPENSE" },
+        where: { ...baseWhere, type: "EXPENSE" },
       }),
     ]);
 

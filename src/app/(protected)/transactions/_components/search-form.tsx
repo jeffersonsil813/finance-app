@@ -26,11 +26,11 @@ const SearchForm = ({ onSearch }: SearchFormProps) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      formik.handleSubmit();
+      onSearch(formik.values.search.trim());
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [formik.values.search]);
+  }, [formik.values.search, onSearch]);
 
   return (
     <form className="w-full" onSubmit={formik.handleSubmit}>
