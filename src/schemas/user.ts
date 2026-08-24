@@ -15,10 +15,20 @@ const baseUserSchema = z.object({
     .string({
       error: (issue) =>
         issue.input === undefined
-          ? "Name is required"
-          : "Name must be a valid string",
+          ? "Your full name is required"
+          : "Your full name must be a valid string",
     })
-    .min(1, "Name is required"),
+    .trim()
+    .min(1, "Your full name is required")
+    .refine(
+      (value) => {
+        const parts = value.split(/\s+/);
+        return parts.length >= 2 && parts.every((part) => part.length >= 2);
+      },
+      {
+        message: "Please enter your full name",
+      },
+    ),
 
   password: z
     .string({
