@@ -52,16 +52,23 @@ const baseTransactionSchema = z.object({
     ),
 });
 
-export const createTransactionSchema = baseTransactionSchema.refine(
-  (data) => {
-    if (data.type === Type.EXPENSE) return !!data.expenseCategory;
-    if (data.type === Type.INCOME) return !!data.incomeCategory;
-    return false;
-  },
-  {
-    message:
-      "The category must match the transaction type (expense category for expense, income category for income)",
-    path: ["expenseCategory"],
+export const createTransactionSchema = baseTransactionSchema.superRefine(
+  (data, ctx) => {
+    if (data.type === Type.EXPENSE && !data.expenseCategory) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Expense category is required",
+        path: ["expenseCategory"],
+      });
+    }
+
+    if (data.type === Type.INCOME && !data.incomeCategory) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Income category is required",
+        path: ["incomeCategory"],
+      });
+    }
   },
 );
 

@@ -61,7 +61,9 @@ const CategorySelector = ({
   const options = CATEGORY_OPTIONS[type];
   const selectedCategory = formik.values[categoryField];
   const categoryError =
-    formik.touched[categoryField] && formik.errors[categoryField];
+    formik.touched[categoryField] || formik.submitCount > 0
+      ? formik.errors[categoryField]
+      : undefined;
 
   return (
     <Field>
