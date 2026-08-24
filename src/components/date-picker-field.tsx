@@ -61,6 +61,9 @@ const DatePickerField = ({
             selected={value}
             onSelect={onChange}
             disabled={disabled}
+            fixedWeeks
+            showOutsideDays
+            captionLayout="dropdown-years"
           />
         </PopoverContent>
       </Popover>
