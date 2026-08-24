@@ -253,7 +253,7 @@ const TransactionForm = ({
           fieldLabelProps={{ htmlFor: "amount", children: "Amount" }}
           id="amount"
           value={formik.values.amount}
-          onValueChange={(value) => handleChangeAmount(value)}
+          onValueChange={handleChangeAmount}
           disabled={isPending}
           fieldDescriptionProps={getFieldError("amount")}
         />
