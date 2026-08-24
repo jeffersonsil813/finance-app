@@ -1,3 +1,4 @@
+import CurrencyField from "@/components/currency-field";
 import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
 import DatePickerField from "@/components/date-picker-field";
@@ -192,6 +193,13 @@ const TransactionForm = ({
     );
   };
 
+  const handleChangeAmount = (value?: number) => {
+    formik.setFieldValue("amount", value).then(() => {
+      formik.setFieldTouched("amount", true);
+      formik.validateForm();
+    });
+  };
+
   const getFieldError = (field: keyof TransactionFormValues) => {
     const error = formik.errors[field];
     const touched = formik.touched[field];
@@ -241,16 +249,12 @@ const TransactionForm = ({
           fieldDescriptionProps={getFieldError("description")}
         />
 
-        <CustomField
+        <CurrencyField
           fieldLabelProps={{ htmlFor: "amount", children: "Amount" }}
-          inputProps={{
-            id: "amount",
-            type: "number",
-            placeholder: "0.00",
-            value: formik.values.amount || "",
-            onChange: formik.handleChange,
-            disabled: isPending,
-          }}
+          id="amount"
+          value={formik.values.amount}
+          onValueChange={(value) => handleChangeAmount(value)}
+          disabled={isPending}
           fieldDescriptionProps={getFieldError("amount")}
         />
 
