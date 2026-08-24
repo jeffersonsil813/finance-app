@@ -297,7 +297,6 @@ const TransactionForm = ({
         )}
 
         <CustomButton
-          type="button"
           variant="outline"
           className="order-2 flex-1 min-w-0"
           onClick={onSuccess}

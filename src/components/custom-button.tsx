@@ -39,7 +39,6 @@ const CustomButton = ({
 }: CustomButtonProps) => {
   return (
     <Button
-      type="button"
       className={cn(customButtonVariants({ variant }), className)}
       {...props}
     >
