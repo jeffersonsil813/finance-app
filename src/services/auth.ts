@@ -3,7 +3,7 @@ import { User } from "../../prisma/generated/client";
 
 type LoginCredentials = Omit<User, "name" | "id">;
 
-export async function LoginClient(credentials: LoginCredentials) {
+export async function loginClient(credentials: LoginCredentials) {
   return api("/api/auth/login", {
     method: "POST",
     body: credentials,
@@ -22,7 +22,7 @@ interface RegisterResponse {
   message: string;
 }
 
-export async function RegisterClient(newUserData: RegisterData) {
+export async function registerClient(newUserData: RegisterData) {
   return api<RegisterResponse>("/api/auth/register", {
     method: "POST",
     body: newUserData,

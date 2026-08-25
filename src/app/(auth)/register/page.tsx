@@ -5,7 +5,7 @@ import CustomField from "@/components/custom-field";
 import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
 import { registerSchema } from "@/schemas/user";
-import { RegisterClient } from "@/services/auth";
+import { registerClient } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Link from "next/link";
@@ -17,7 +17,7 @@ const Register = () => {
   const router = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: RegisterClient,
+    mutationFn: registerClient,
   });
 
   const formik = useFormik({
