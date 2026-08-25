@@ -515,10 +515,6 @@ export type NullableEnumIncomeCategoryFieldUpdateOperationsInput = {
   set?: $Enums.IncomeCategory | null
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type TransactionCreateWithoutUserInput = {
   id?: string
   description?: string | null

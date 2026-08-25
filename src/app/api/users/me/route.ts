@@ -70,7 +70,7 @@ export async function DELETE() {
 
     const response = NextResponse.json(
       {
-        message: "User successfully deleted!",
+        message: "Account successfully deleted!",
       },
       { status: 200 },
     );
@@ -78,6 +78,55 @@ export async function DELETE() {
     response.cookies.delete("token");
 
     return response;
+  } catch (error) {
+    if (error instanceof UnauthorizedError) {
+      return NextResponse.json({ error: error.message }, { status: 401 });
+    }
+
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
+  }
+}
+
+function getInitials(name: string): string {
+  const words = name.trim().split(/\s+/);
+
+  if (words.length === 0 || !words[0]) return "";
+
+  if (words.length === 1) {
+    return words[0].charAt(0).toUpperCase();
+  }
+
+  const firstInitial = words[0].charAt(0);
+  const lastInitial = words[words.length - 1].charAt(0);
+
+  return `${firstInitial}${lastInitial}`.toUpperCase();
+}
+
+export async function GET() {
+  try {
+    const userId = await getUserId();
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const userData = {
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+      initials: getInitials(user.name),
+    };
+
+    return NextResponse.json({ ...userData }, { status: 200 });
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       return NextResponse.json({ error: error.message }, { status: 401 });
