@@ -1,6 +1,6 @@
 import { BCRYPT_SALT_ROUNDS } from "@/lib/constants";
 import prisma from "@/lib/prisma";
-import { createUserSchema } from "@/schemas/user";
+import { baseUserSchema } from "@/schemas/user";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const validation = createUserSchema.safeParse(body);
+    const validation = baseUserSchema.safeParse(body);
 
     if (!validation.success) {
       const flattened = z.flattenError(validation.error);

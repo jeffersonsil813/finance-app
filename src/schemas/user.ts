@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const baseUserSchema = z.object({
+export const baseUserSchema = z.object({
   email: z
     .string({
       error: (issue) =>
@@ -49,9 +49,7 @@ const baseUserSchema = z.object({
     ),
 });
 
-export const createUserSchema = baseUserSchema;
-
-export const updateUserSchema = baseUserSchema.omit({ email: true }).partial();
+export const updateUserSchema = baseUserSchema.partial();
 
 export const loginSchema = baseUserSchema
   .pick({
