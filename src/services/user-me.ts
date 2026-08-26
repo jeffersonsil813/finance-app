@@ -18,7 +18,6 @@ export async function updateUser(newUserData: NewUserData) {
 
 export type GetUserResponse = Omit<User, "id" | "password"> & {
   initials: string;
-  createdAt: string;
 };
 
 export async function getUser() {
