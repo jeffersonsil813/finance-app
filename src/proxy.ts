@@ -9,6 +9,16 @@ const PUBLIC_API_ROUTES = [
   "/api/auth/logout",
 ];
 
+function applyNoCacheHeaders(response: NextResponse) {
+  response.headers.set(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate",
+  );
+  response.headers.set("Pragma", "no-cache");
+  response.headers.set("Expires", "0");
+  return response;
+}
+
 export async function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
@@ -42,10 +52,11 @@ export async function proxy(request: NextRequest) {
     if (!isValidToken && pathname !== "/" && pathname !== "/register") {
       const response = NextResponse.redirect(new URL("/", request.url));
       if (token) response.cookies.delete("token");
-      return response;
+      return applyNoCacheHeaders(response);
     }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+    return applyNoCacheHeaders(response);
   }
 
   if (!isValidToken) {

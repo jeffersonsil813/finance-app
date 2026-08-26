@@ -25,6 +25,12 @@ export async function api<T = unknown>(
   }
 
   if (!response.ok) {
+    if (response.status === 401) {
+      if (typeof window !== "undefined") {
+        window.location.href = "/";
+      }
+    }
+
     throw data || { error: "An error occurred with the request" };
   }
 
