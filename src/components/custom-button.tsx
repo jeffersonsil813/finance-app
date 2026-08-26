@@ -14,6 +14,7 @@ const customButtonVariants = cva(
           "bg-green-600 text-white hover:bg-[color-mix(in_srgb,var(--color-green-600)_85%,black)]",
         outline:
           "border border-[#E5E5E0] bg-transparent text-[#6B7280] hover:bg-gray-field",
+        black: "bg-black hover:bg-[#1a1a2a] text-white",
       },
     },
     defaultVariants: {
