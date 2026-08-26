@@ -31,3 +31,18 @@ export async function deleteUser() {
     method: "DELETE",
   });
 }
+
+interface NewUserPasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export async function changeUserPassword(
+  newUserPasswordData: NewUserPasswordData,
+) {
+  return api<BaseResponse>(`${userBaseUrl}/change-password`, {
+    method: "PATCH",
+    body: newUserPasswordData,
+  });
+}
