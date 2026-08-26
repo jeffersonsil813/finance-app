@@ -370,3 +370,7 @@ const TRANSACTION_TYPE_CONFIG: Record<Type, TransactionType<Type>> = {
 };
 
 export const TRANSACTION_TYPE_OPTIONS = Object.values(TRANSACTION_TYPE_CONFIG);
+
+const now = new Date();
+export const currentMonth = now.getUTCMonth() + 1;
+export const currentYear = now.getUTCFullYear();
