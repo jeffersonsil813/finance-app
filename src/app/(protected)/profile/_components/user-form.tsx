@@ -7,7 +7,7 @@ import { handleApiError } from "@/lib/handle-api-error";
 import { formatDate } from "@/lib/utils";
 import { updateUserSchema } from "@/schemas/user";
 import { getUser, GetUserResponse, updateUser } from "@/services/user-me";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -35,6 +35,7 @@ const UserHeader = ({ createdAt, email, initials, name }: GetUserResponse) => {
 
 const UserForm = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const queryClient = useQueryClient();
 
   const { data: userData } = useQuery({
     queryKey: ["user"],
@@ -43,6 +44,9 @@ const UserForm = () => {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updateUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
   });
 
   const formik = useFormik({
