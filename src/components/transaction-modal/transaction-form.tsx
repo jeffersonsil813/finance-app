@@ -10,6 +10,7 @@ import {
   INCOME_CATEGORY_OPTIONS,
   TRANSACTION_TYPE_OPTIONS,
 } from "@/lib/constants";
+import { handleApiError } from "@/lib/handle-api-error";
 import {
   createTransactionSchema,
   TransactionFormValues,
@@ -119,17 +120,20 @@ const TransactionForm = ({
     onSuccess();
   };
 
-  const handlePromiseToast = (
+  const handlePromiseToast = async (
     promise: Promise<any>,
     messages: { loading: string; successFallback: string },
   ) => {
-    toast.promise(promise, {
+    await toast.promise(promise, {
       loading: messages.loading,
       success: (data) => {
         handleSuccess();
         return data?.message || messages.successFallback;
       },
-      error: (err: Error) => err.message,
+      error: (err) => {
+        handleApiError(err);
+        return null;
+      },
     });
   };
 

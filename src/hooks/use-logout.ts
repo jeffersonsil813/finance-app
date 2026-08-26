@@ -1,3 +1,4 @@
+import { handleApiError } from "@/lib/handle-api-error";
 import { logoutClient } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -10,14 +11,17 @@ export function useLogout() {
     mutationFn: logoutClient,
   });
 
-  const handleLogout = () => {
-    toast.promise(mutateAsync(), {
+  const handleLogout = async () => {
+    await toast.promise(mutateAsync(), {
       loading: "Logging out...",
       success: () => {
         router.replace("/");
         return "You have been logged out!";
       },
-      error: (err: Error) => err.message,
+      error: (err) => {
+        handleApiError(err);
+        return null;
+      },
     });
   };
 

@@ -3,6 +3,7 @@
 import Container from "@/app/(protected)/profile/_components/container";
 import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
+import { handleApiError } from "@/lib/handle-api-error";
 import { formatDate } from "@/lib/utils";
 import { updateUserSchema } from "@/schemas/user";
 import { getUser, GetUserResponse, updateUser } from "@/services/user-me";
@@ -51,18 +52,18 @@ const UserForm = () => {
     },
     validationSchema: toFormikValidationSchema(updateUserSchema),
     enableReinitialize: true,
-    onSubmit: (values) => {
-      toast.promise(
-        mutateAsync(values).then((data) => data),
-        {
-          loading: "Saving...",
-          success: (data) => {
-            toggleIsEditing();
-            return data?.message;
-          },
-          error: (err: Error) => err.message,
+    onSubmit: async (values) => {
+      await toast.promise(mutateAsync(values), {
+        loading: "Saving...",
+        success: (data) => {
+          toggleIsEditing();
+          return data?.message;
         },
-      );
+        error: (err) => {
+          handleApiError(err);
+          return null;
+        },
+      });
     },
   });
 

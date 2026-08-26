@@ -25,7 +25,7 @@ export async function api<T = unknown>(
   }
 
   if (!response.ok) {
-    throw new Error(data?.error || "An error occurred with the request");
+    throw data || { error: "An error occurred with the request" };
   }
 
   return data as T;

@@ -4,6 +4,7 @@ import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
 import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
+import { handleApiError } from "@/lib/handle-api-error";
 import { loginSchema } from "@/schemas/user";
 import { loginClient } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
@@ -26,14 +27,17 @@ export default function Login() {
       password: "",
     },
     validationSchema: toFormikValidationSchema(loginSchema),
-    onSubmit: (values) => {
-      toast.promise(mutateAsync(values), {
+    onSubmit: async (values) => {
+      await toast.promise(mutateAsync(values), {
         loading: "Loading...",
         success: () => {
           router.replace("/dashboard");
           return "Welcome!";
         },
-        error: (err: Error) => err.message,
+        error: (err) => {
+          handleApiError(err);
+          return null;
+        },
       });
     },
   });

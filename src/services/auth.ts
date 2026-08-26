@@ -1,7 +1,7 @@
 import { api } from "@/lib/api-client";
 import { User } from "../../prisma/generated/client";
 
-type LoginCredentials = Omit<User, "name" | "id">;
+type LoginCredentials = Omit<User, "name" | "id" | "createdAt">;
 
 export async function loginClient(credentials: LoginCredentials) {
   return api("/api/auth/login", {
@@ -16,7 +16,7 @@ export async function logoutClient() {
   });
 }
 
-type RegisterData = Omit<User, "id">;
+type RegisterData = Omit<User, "id" | "createdAt">;
 
 interface RegisterResponse {
   message: string;

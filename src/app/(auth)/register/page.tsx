@@ -4,6 +4,7 @@ import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
 import PasswordField from "@/components/password-field";
 import Subtitle from "@/components/subtitle";
+import { handleApiError } from "@/lib/handle-api-error";
 import { registerSchema } from "@/schemas/user";
 import { registerClient } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
@@ -28,20 +29,18 @@ const Register = () => {
       confirmPassword: "",
     },
     validationSchema: toFormikValidationSchema(registerSchema),
-    onSubmit: (values) => {
-      toast.promise(
-        mutateAsync(values).then((data) => {
-          return data;
-        }),
-        {
-          loading: "Loading...",
-          success: (data) => {
-            router.push("/");
-            return data?.message;
-          },
-          error: (err: Error) => err.message,
+    onSubmit: async (values) => {
+      await toast.promise(mutateAsync(values), {
+        loading: "Loading...",
+        success: (data) => {
+          router.push("/");
+          return data?.message;
         },
-      );
+        error: (err) => {
+          handleApiError(err);
+          return null;
+        },
+      });
     },
   });
 
