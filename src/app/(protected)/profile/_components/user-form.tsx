@@ -73,6 +73,14 @@ const UserForm = () => {
 
   const toggleIsEditing = () => setIsEditing((prev) => !prev);
 
+  const handleCancellationEdition = () => {
+    formik.setValues({
+      email: userData?.email || "",
+      name: userData?.name || "",
+    });
+    toggleIsEditing();
+  };
+
   return (
     <Container>
       {userData && (
@@ -121,7 +129,7 @@ const UserForm = () => {
 
         {isEditing ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
-            <CustomButton variant="outline" onClick={toggleIsEditing}>
+            <CustomButton variant="outline" onClick={handleCancellationEdition}>
               Cancel
             </CustomButton>
             <CustomButton type="submit" disabled={isPending}>
