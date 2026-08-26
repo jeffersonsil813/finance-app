@@ -1,4 +1,5 @@
 import { getUserId, UnauthorizedError } from "@/lib/auth";
+import { currentMonth, currentYear } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -50,10 +51,6 @@ export async function GET(request: Request) {
         { status: 400 },
       );
     }
-
-    const now = new Date();
-    const currentYear = now.getUTCFullYear();
-    const currentMonth = now.getUTCMonth() + 1;
 
     const isFuture =
       year > currentYear || (year === currentYear && month > currentMonth);
