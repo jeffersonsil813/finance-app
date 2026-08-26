@@ -1,11 +1,12 @@
 import { Metadata } from "next";
+import PageContent from "./_components/page-content";
 
 export const metadata: Metadata = {
   title: "Dashboard",
 };
 
 const Dashboard = () => {
-  return <h1>Dashboard</h1>;
+  return <PageContent />;
 };
 
 export default Dashboard;
