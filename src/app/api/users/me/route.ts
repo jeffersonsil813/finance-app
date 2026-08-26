@@ -29,6 +29,25 @@ export async function PATCH(request: Request) {
       );
     }
 
+    if (validation.data.email) {
+      const userByEmail = await prisma.user.findFirst({
+        where: {
+          email: validation.data.email,
+          id: { not: userId },
+        },
+      });
+
+      if (userByEmail) {
+        return NextResponse.json(
+          {
+            error:
+              "This email address could not be used. Please try another one",
+          },
+          { status: 400 },
+        );
+      }
+    }
+
     const { password, ...validatedData } = validation.data;
 
     const newUserData = {
