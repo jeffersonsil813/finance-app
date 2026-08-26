@@ -1,5 +1,3 @@
-"use client";
-
 import Container from "@/app/(protected)/profile/_components/container";
 import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
