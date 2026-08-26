@@ -25,9 +25,12 @@ export async function api<T = unknown>(
   }
 
   if (!response.ok) {
-    if (response.status === 401) {
-      if (typeof window !== "undefined") {
+    if (response.status === 401 && typeof window !== "undefined") {
+      const isLoginPage = window.location.pathname === "/";
+
+      if (!isLoginPage) {
         window.location.href = "/";
+        throw data || { error: "Unauthorized" };
       }
     }
 
