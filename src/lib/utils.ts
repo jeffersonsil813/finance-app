@@ -17,5 +17,6 @@ export const formatDate = (date: Date): string => {
     weekday: "long",
     month: "long",
     day: "numeric",
+    year: "numeric",
   }).format(date);
 };
