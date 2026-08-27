@@ -8,6 +8,7 @@ export async function generateFinancialAnalysis(transactions: Transaction[]) {
     category: t.expenseCategory ?? t.incomeCategory,
     amount: t.amount,
     date: t.date,
+    description: t.description,
   }));
 
   const prompt = `
