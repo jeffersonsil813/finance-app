@@ -19,7 +19,7 @@ const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
   });
 
   return (
-    <div className="col-span-12 md:col-span-4 h-full bg-linear-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#DCFCE7] border border-[#BBF7D0] rounded-2xl p-5 flex flex-col shadow-sm">
+    <div className="col-span-12 lg:col-span-4 h-full bg-linear-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#DCFCE7] border border-[#BBF7D0] rounded-2xl p-5 flex flex-col shadow-sm">
       <div className="flex items-center gap-2.5 mb-3">
         <div className="w-8 h-8 bg-[#16A34A] text-white rounded-xl flex items-center justify-center shadow-sm">
           <LucideSparkles className="w-3.75 h-3.75" />

@@ -32,7 +32,7 @@ export function SummaryCard({
 
   return (
     <div
-      className={`col-span-12 md:col-span-4 h-full rounded-2xl p-5 ${
+      className={`col-span-12 lg:col-span-4 h-full rounded-2xl p-5 ${
         isDark
           ? "bg-black shadow-md"
           : "bg-white border border-[#E5E5E0] shadow-sm"

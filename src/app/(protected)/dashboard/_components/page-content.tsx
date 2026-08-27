@@ -32,7 +32,7 @@ const PageContent = () => {
         userName={insightsData?.userFirstName || ""}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <SummaryCard
           variant="dark"
           label="Total Balance"
@@ -59,9 +59,9 @@ const PageContent = () => {
           invertChangeColor
         />
 
-        <div className="col-span-12 md:col-span-7 h-full">4</div>
-        <div className="col-span-12 md:col-span-5 h-full">5</div>
-        <div className="col-span-12 md:col-span-8 h-full">6</div>
+        <div className="col-span-12 lg:col-span-7 h-full">4</div>
+        <div className="col-span-12 lg:col-span-5 h-full">5</div>
+        <div className="col-span-12 lg:col-span-8 h-full">6</div>
 
         <AIAnalysis month={period.month} year={period.year} />
       </div>
