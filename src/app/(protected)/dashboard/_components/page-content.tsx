@@ -5,6 +5,7 @@ import { getInsights } from "@/services/insight";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+import AIAnalysis from "./ai-analysis";
 import PageHeader from "./page-header";
 import { SummaryCard } from "./summary-card";
 
@@ -61,7 +62,8 @@ const PageContent = () => {
         <div className="col-span-12 md:col-span-7 h-full">4</div>
         <div className="col-span-12 md:col-span-5 h-full">5</div>
         <div className="col-span-12 md:col-span-8 h-full">6</div>
-        <div className="col-span-12 md:col-span-4 h-full">7</div>
+
+        <AIAnalysis month={period.month} year={period.year} />
       </div>
     </main>
   );
