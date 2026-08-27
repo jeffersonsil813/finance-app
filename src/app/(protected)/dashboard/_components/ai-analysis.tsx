@@ -2,6 +2,7 @@ import CustomButton from "@/components/custom-button";
 import { getAIAnalysis } from "@/services/ai-analyze";
 import { useQuery } from "@tanstack/react-query";
 import { LucideSparkles } from "lucide-react";
+import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 
 interface AIAnalysisProps {
@@ -19,6 +20,22 @@ const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
     enabled: false,
     staleTime: Infinity,
   });
+
+  function handleGenerate() {
+    toast.promise(
+      refetch().then((result) => {
+        if (result.isError) {
+          throw result.error;
+        }
+        return result.data;
+      }),
+      {
+        loading: "Generating analysis...",
+        success: "Analysis ready!",
+        error: "Failed to generate analysis",
+      },
+    );
+  }
 
   return (
     <div className="col-span-12 lg:col-span-4 h-full bg-linear-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#DCFCE7] border border-[#BBF7D0] rounded-2xl p-5 flex flex-col shadow-sm">
@@ -60,7 +77,7 @@ const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
       <CustomButton
         startIcon={LucideSparkles}
         disabled={isFetching}
-        onClick={() => refetch()}
+        onClick={handleGenerate}
       >
         {isFetching ? "Generating..." : "Generate Analysis"}
       </CustomButton>
