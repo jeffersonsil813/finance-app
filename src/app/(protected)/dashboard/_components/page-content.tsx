@@ -3,8 +3,10 @@
 import { currentMonth, currentYear } from "@/lib/constants";
 import { getInsights } from "@/services/insight";
 import { useQuery } from "@tanstack/react-query";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import PageHeader from "./page-header";
+import { SummaryCard } from "./summary-card";
 
 const PageContent = () => {
   const [period, setPeriod] = useState({
@@ -28,6 +30,39 @@ const PageContent = () => {
         period={period}
         userName={insightsData?.userFirstName || ""}
       />
+
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <SummaryCard
+          variant="dark"
+          label="Total Balance"
+          value={insightsData?.total || 0}
+          footer="Updated today"
+        />
+
+        <SummaryCard
+          label="Income"
+          value={insightsData?.totalIn || 0}
+          icon={ArrowUpRight}
+          iconColor="#16A34A"
+          iconBg="#DCFCE7"
+          changePercent={insightsData?.incomeChangePercent}
+        />
+
+        <SummaryCard
+          label="Expenses"
+          value={insightsData?.totalOut || 0}
+          icon={ArrowDownRight}
+          iconColor="#DC2626"
+          iconBg="#FEE2E2"
+          changePercent={insightsData?.expenseChangePercent}
+          invertChangeColor
+        />
+
+        <div className="col-span-12 md:col-span-7 h-full">4</div>
+        <div className="col-span-12 md:col-span-5 h-full">5</div>
+        <div className="col-span-12 md:col-span-8 h-full">6</div>
+        <div className="col-span-12 md:col-span-4 h-full">7</div>
+      </div>
     </main>
   );
 };

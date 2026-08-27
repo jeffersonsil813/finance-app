@@ -16,7 +16,16 @@ function calcPercentageChange(
   if (previous === 0) {
     return null;
   }
-  return Number((((current - previous) / Math.abs(previous)) * 100).toFixed(1));
+
+  const change = Number(
+    (((current - previous) / Math.abs(previous)) * 100).toFixed(1),
+  );
+
+  if (change === 0) {
+    return null;
+  }
+
+  return change;
 }
 
 export async function GET(request: Request) {
