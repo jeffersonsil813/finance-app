@@ -32,7 +32,7 @@ const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
       {
         loading: "Generating analysis...",
         success: "Analysis ready!",
-        error: "Failed to generate analysis",
+        error: (data) => data?.error ?? "Failed to generate analysis",
       },
     );
   }
