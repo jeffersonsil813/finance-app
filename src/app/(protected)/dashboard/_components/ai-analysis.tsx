@@ -16,7 +16,13 @@ const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
       return await getAIAnalysis(params);
     },
     enabled: false,
+    staleTime: Infinity,
   });
+
+  const handleGenerate = () => {
+    if (data) return;
+    refetch();
+  };
 
   return (
     <div className="col-span-12 lg:col-span-4 h-full bg-linear-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#DCFCE7] border border-[#BBF7D0] rounded-2xl p-5 flex flex-col shadow-sm">
@@ -35,8 +41,8 @@ const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
 
       <CustomButton
         startIcon={LucideSparkles}
-        disabled={isFetching}
-        onClick={() => refetch()}
+        disabled={data ? true : isFetching}
+        onClick={handleGenerate}
       >
         {isFetching ? "Generating..." : "Generate Analysis"}
       </CustomButton>
