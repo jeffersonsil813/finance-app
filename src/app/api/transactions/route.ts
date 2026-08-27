@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       prisma.transaction.findMany({
         where: listWhere,
         orderBy: {
-          createdAt: "desc",
+          date: "desc",
         },
       }),
       prisma.transaction.aggregate({
