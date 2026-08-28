@@ -18,6 +18,12 @@ export interface GetInsightsResponse {
     total: number;
   }[];
   recentTransactions: Transaction[];
+  monthlyOverview: {
+    month: string;
+    year: number;
+    income: number;
+    expenses: number;
+  }[];
 }
 
 export async function getInsights({ month, year }: InsightParams) {

@@ -3,10 +3,32 @@ import { currentMonth, currentYear } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+const MONTH_LABELS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const MONTHS_TO_SHOW = 6;
+
 function getMonthRange(year: number, month: number) {
   const start = new Date(Date.UTC(year, month - 1, 1));
   const end = new Date(Date.UTC(year, month, 1));
   return { start, end };
+}
+
+function shiftMonth(year: number, month: number, offset: number) {
+  const date = new Date(Date.UTC(year, month - 1 + offset, 1));
+  return { year: date.getUTCFullYear(), month: date.getUTCMonth() + 1 };
 }
 
 function calcPercentageChange(
@@ -87,6 +109,14 @@ export async function GET(request: Request) {
       date: { gte: previousRange.start, lt: previousRange.end },
     };
 
+    const overviewBuckets = Array.from({ length: MONTHS_TO_SHOW }, (_, i) =>
+      shiftMonth(year, month, i - (MONTHS_TO_SHOW - 1)),
+    );
+    const overviewRangeStart = new Date(
+      Date.UTC(overviewBuckets[0].year, overviewBuckets[0].month - 1, 1),
+    );
+    const overviewRangeEnd = currentRange.end;
+
     const [
       user,
       currentIn,
@@ -95,6 +125,7 @@ export async function GET(request: Request) {
       previousOut,
       byCategoryRaw,
       recentTransactions,
+      overviewTransactions,
     ] = await Promise.all([
       prisma.user.findUnique({
         where: { id: userId },
@@ -126,6 +157,13 @@ export async function GET(request: Request) {
         orderBy: { date: "desc" },
         take: 5,
       }),
+      prisma.transaction.findMany({
+        where: {
+          userId,
+          date: { gte: overviewRangeStart, lt: overviewRangeEnd },
+        },
+        select: { amount: true, type: true, date: true },
+      }),
     ]);
 
     const inValue = Number(currentIn._sum.amount ?? 0);
@@ -143,6 +181,38 @@ export async function GET(request: Request) {
       }))
       .sort((a, b) => b.total - a.total);
 
+    const overviewTotals = new Map<
+      string,
+      { income: number; expense: number }
+    >();
+    overviewBuckets.forEach(({ year, month }) => {
+      overviewTotals.set(`${year}-${month}`, { income: 0, expense: 0 });
+    });
+
+    for (const tx of overviewTransactions) {
+      const txDate = new Date(tx.date);
+      const key = `${txDate.getUTCFullYear()}-${txDate.getUTCMonth() + 1}`;
+      const bucket = overviewTotals.get(key);
+      if (!bucket) continue;
+
+      const amount = Number(tx.amount);
+      if (tx.type === "INCOME") {
+        bucket.income += amount;
+      } else {
+        bucket.expense += amount;
+      }
+    }
+
+    const monthlyOverview = overviewBuckets.map(({ year, month }) => {
+      const bucket = overviewTotals.get(`${year}-${month}`)!;
+      return {
+        month: MONTH_LABELS[month - 1],
+        year,
+        income: Number(bucket.income.toFixed(2)),
+        expenses: Number(bucket.expense.toFixed(2)),
+      };
+    });
+
     return NextResponse.json(
       {
         userFirstName: (user?.name || "").split(" ")[0] || "",
@@ -153,6 +223,7 @@ export async function GET(request: Request) {
         expenseChangePercent: calcPercentageChange(outValue, prevOutValue),
         expenseByCategory,
         recentTransactions,
+        monthlyOverview,
       },
       { status: 200 },
     );
