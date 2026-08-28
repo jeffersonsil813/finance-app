@@ -94,6 +94,7 @@ export async function GET(request: Request) {
       previousIn,
       previousOut,
       byCategoryRaw,
+      recentTransactions,
     ] = await Promise.all([
       prisma.user.findUnique({
         where: { id: userId },
@@ -119,6 +120,11 @@ export async function GET(request: Request) {
         by: ["expenseCategory"],
         _sum: { amount: true },
         where: { ...baseWhereCurrent, type: "EXPENSE" },
+      }),
+      prisma.transaction.findMany({
+        where: baseWhereCurrent,
+        orderBy: { date: "desc" },
+        take: 5,
       }),
     ]);
 
@@ -146,6 +152,7 @@ export async function GET(request: Request) {
         incomeChangePercent: calcPercentageChange(inValue, prevInValue),
         expenseChangePercent: calcPercentageChange(outValue, prevOutValue),
         expenseByCategory,
+        recentTransactions,
       },
       { status: 200 },
     );

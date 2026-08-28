@@ -1,4 +1,5 @@
 import { api } from "@/lib/api-client";
+import { Transaction } from "../../prisma/generated/browser";
 
 interface InsightParams {
   year: number;
@@ -16,6 +17,7 @@ export interface GetInsightsResponse {
     category: string;
     total: number;
   }[];
+  recentTransactions: Transaction[];
 }
 
 export async function getInsights({ month, year }: InsightParams) {
