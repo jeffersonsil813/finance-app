@@ -49,11 +49,17 @@ const ExpenseGraph = ({ data }: ExpenseGraphProps) => {
                 content={({ active, payload }) => {
                   if (!active || !payload?.length) return null;
                   const value = payload[0].value as number;
+                  const fill = payload[0].payload.fill as string;
+
                   return (
                     <div
-                      className="border border-border bg-white p-2 text-sm text-black"
+                      className="flex items-center gap-2 border border-border bg-white p-2 text-sm text-black"
                       style={{ borderRadius: "7.2px" }}
                     >
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ backgroundColor: fill }}
+                      />
                       {formatCurrency(value)}
                     </div>
                   );
