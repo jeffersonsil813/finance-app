@@ -8,6 +8,7 @@ import { useState } from "react";
 import AIAnalysis from "./ai-analysis";
 import ExpenseGraph from "./expense-graph";
 import PageHeader from "./page-header";
+import RecentTransactions from "./recent-transactions";
 import { SummaryCard } from "./summary-card";
 
 const PageContent = () => {
@@ -64,7 +65,9 @@ const PageContent = () => {
 
         <ExpenseGraph data={insightsData?.expenseByCategory || []} />
 
-        <div className="col-span-12 lg:col-span-8 h-full">6</div>
+        <RecentTransactions
+          transactions={insightsData?.recentTransactions || []}
+        />
 
         <AIAnalysis month={period.month} year={period.year} />
       </div>
