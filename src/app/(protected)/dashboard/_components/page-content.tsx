@@ -69,7 +69,13 @@ const PageContent = () => {
           transactions={insightsData?.recentTransactions || []}
         />
 
-        <AIAnalysis month={period.month} year={period.year} />
+        <AIAnalysis
+          month={period.month}
+          year={period.year}
+          isAbleToGenerateAnalysis={
+            (insightsData?.recentTransactions || []).length > 0
+          }
+        />
       </div>
     </main>
   );

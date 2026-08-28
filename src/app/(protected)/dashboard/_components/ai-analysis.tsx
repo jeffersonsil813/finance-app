@@ -8,9 +8,14 @@ import ReactMarkdown from "react-markdown";
 interface AIAnalysisProps {
   year: number;
   month: number;
+  isAbleToGenerateAnalysis: boolean;
 }
 
-const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
+const AIAnalysis = ({
+  month,
+  year,
+  isAbleToGenerateAnalysis,
+}: AIAnalysisProps) => {
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["AI Analysis", year, month],
     queryFn: async () => {
@@ -76,7 +81,7 @@ const AIAnalysis = ({ month, year }: AIAnalysisProps) => {
 
       <CustomButton
         startIcon={LucideSparkles}
-        disabled={isFetching}
+        disabled={isFetching || !isAbleToGenerateAnalysis}
         onClick={handleGenerate}
       >
         {isFetching ? "Generating..." : "Generate Analysis"}
