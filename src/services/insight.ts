@@ -12,6 +12,10 @@ interface GetInsightsResponse {
   totalOut: number;
   incomeChangePercent: number;
   expenseChangePercent: number;
+  expenseByCategory: {
+    category: string;
+    total: number;
+  }[];
 }
 
 export async function getInsights({ month, year }: InsightParams) {

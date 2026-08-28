@@ -87,29 +87,40 @@ export async function GET(request: Request) {
       date: { gte: previousRange.start, lt: previousRange.end },
     };
 
-    const [user, currentIn, currentOut, previousIn, previousOut] =
-      await Promise.all([
-        prisma.user.findUnique({
-          where: { id: userId },
-          select: { name: true },
-        }),
-        prisma.transaction.aggregate({
-          _sum: { amount: true },
-          where: { ...baseWhereCurrent, type: "INCOME" },
-        }),
-        prisma.transaction.aggregate({
-          _sum: { amount: true },
-          where: { ...baseWhereCurrent, type: "EXPENSE" },
-        }),
-        prisma.transaction.aggregate({
-          _sum: { amount: true },
-          where: { ...baseWherePrevious, type: "INCOME" },
-        }),
-        prisma.transaction.aggregate({
-          _sum: { amount: true },
-          where: { ...baseWherePrevious, type: "EXPENSE" },
-        }),
-      ]);
+    const [
+      user,
+      currentIn,
+      currentOut,
+      previousIn,
+      previousOut,
+      byCategoryRaw,
+    ] = await Promise.all([
+      prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true },
+      }),
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { ...baseWhereCurrent, type: "INCOME" },
+      }),
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { ...baseWhereCurrent, type: "EXPENSE" },
+      }),
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { ...baseWherePrevious, type: "INCOME" },
+      }),
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { ...baseWherePrevious, type: "EXPENSE" },
+      }),
+      prisma.transaction.groupBy({
+        by: ["expenseCategory"],
+        _sum: { amount: true },
+        where: { ...baseWhereCurrent, type: "EXPENSE" },
+      }),
+    ]);
 
     const inValue = Number(currentIn._sum.amount ?? 0);
     const outValue = Number(currentOut._sum.amount ?? 0);
@@ -117,6 +128,14 @@ export async function GET(request: Request) {
     const prevOutValue = Number(previousOut._sum.amount ?? 0);
 
     const total = Number((inValue - outValue).toFixed(2));
+
+    const expenseByCategory = byCategoryRaw
+      .filter((item) => item.expenseCategory !== null)
+      .map((item) => ({
+        category: item.expenseCategory as string,
+        total: Number(item._sum.amount ?? 0),
+      }))
+      .sort((a, b) => b.total - a.total);
 
     return NextResponse.json(
       {
@@ -126,6 +145,7 @@ export async function GET(request: Request) {
         totalOut: Number(outValue.toFixed(2)),
         incomeChangePercent: calcPercentageChange(inValue, prevInValue),
         expenseChangePercent: calcPercentageChange(outValue, prevOutValue),
+        expenseByCategory,
       },
       { status: 200 },
     );
