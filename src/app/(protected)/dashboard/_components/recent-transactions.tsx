@@ -44,7 +44,7 @@ const TransactionItem = memo(
     const isIncome = transactionType === Type.INCOME;
 
     return (
-      <div className="flex items-center gap-3 py-3 border-b border-[#F5F5F2]">
+      <div className="flex items-center gap-3 py-3 border-b border-[#F5F5F2] last:border-b-0">
         <div
           className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
           style={{
