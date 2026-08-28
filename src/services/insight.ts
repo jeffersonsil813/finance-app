@@ -5,7 +5,7 @@ interface InsightParams {
   month: number;
 }
 
-interface GetInsightsResponse {
+export interface GetInsightsResponse {
   userFirstName: string;
   total: number;
   totalIn: number;

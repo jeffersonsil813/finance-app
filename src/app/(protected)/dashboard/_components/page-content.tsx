@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import AIAnalysis from "./ai-analysis";
+import ExpenseGraph from "./expense-graph";
 import PageHeader from "./page-header";
 import { SummaryCard } from "./summary-card";
 
@@ -60,7 +61,9 @@ const PageContent = () => {
         />
 
         <div className="col-span-12 lg:col-span-7 h-full">4</div>
-        <div className="col-span-12 lg:col-span-5 h-full">5</div>
+
+        <ExpenseGraph data={insightsData?.expenseByCategory || []} />
+
         <div className="col-span-12 lg:col-span-8 h-full">6</div>
 
         <AIAnalysis month={period.month} year={period.year} />
