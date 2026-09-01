@@ -4,19 +4,22 @@ import {
   ChartLegend,
   ChartTooltip,
 } from "@/components/ui/chart";
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { formatCurrency } from "@/lib/utils";
 import { GetInsightsResponse } from "@/services/insight";
 import { CalendarDays } from "lucide-react";
+import { motion } from "motion/react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 interface MonthlyOverviewProps {
   data: GetInsightsResponse["monthlyOverview"];
+  index: number;
 }
 
 const expensesColor = "#FCA5A5";
 const incomeColor = "#22C55E";
 
-const MonthlyOverview = ({ data }: MonthlyOverviewProps) => {
+const MonthlyOverview = ({ data, index }: MonthlyOverviewProps) => {
   const chartData = data.map(({ month, expenses, income }) => ({
     month,
     expenses,
@@ -32,7 +35,12 @@ const MonthlyOverview = ({ data }: MonthlyOverviewProps) => {
   const hasData = chartData.length > 0;
 
   return (
-    <div className="col-span-12 lg:col-span-7 h-full bg-white border border-[#E5E5E0] rounded-2xl p-5 shadow-sm flex flex-col">
+    <motion.div
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInTransition(index)}
+      className="col-span-12 lg:col-span-7 h-full bg-white border border-[#E5E5E0] rounded-2xl p-5 shadow-sm flex flex-col"
+    >
       <p className="text-sm font-semibold text-black">Income vs Expenses</p>
 
       <p className="text-xs text-[#9CA3AF] mb-5">6-month overview</p>
@@ -139,7 +147,7 @@ const MonthlyOverview = ({ data }: MonthlyOverviewProps) => {
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

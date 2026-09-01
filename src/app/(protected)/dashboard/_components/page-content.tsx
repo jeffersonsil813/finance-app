@@ -41,6 +41,7 @@ const PageContent = () => {
           label="Total Balance"
           value={insightsData?.total || 0}
           footer="Updated today"
+          index={0}
         />
 
         <SummaryCard
@@ -50,6 +51,7 @@ const PageContent = () => {
           iconColor="#16A34A"
           iconBg="#DCFCE7"
           changePercent={insightsData?.incomeChangePercent}
+          index={1}
         />
 
         <SummaryCard
@@ -60,14 +62,16 @@ const PageContent = () => {
           iconBg="#FEE2E2"
           changePercent={insightsData?.expenseChangePercent}
           invertChangeColor
+          index={2}
         />
 
-        <MonthlyOverview data={insightsData?.monthlyOverview || []} />
+        <MonthlyOverview data={insightsData?.monthlyOverview || []} index={3} />
 
-        <ExpenseGraph data={insightsData?.expenseByCategory || []} />
+        <ExpenseGraph data={insightsData?.expenseByCategory || []} index={4} />
 
         <RecentTransactions
           transactions={insightsData?.recentTransactions || []}
+          index={5}
         />
 
         <AIAnalysis
@@ -76,6 +80,7 @@ const PageContent = () => {
           isAbleToGenerateAnalysis={
             (insightsData?.recentTransactions || []).length > 0
           }
+          index={6}
         />
       </div>
     </main>

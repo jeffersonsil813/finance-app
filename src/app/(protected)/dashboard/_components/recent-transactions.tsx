@@ -1,15 +1,18 @@
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import {
   EXPENSE_CATEGORY_OPTIONS,
   INCOME_CATEGORY_OPTIONS,
 } from "@/lib/constants";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { BadgeDollarSign } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { memo, useMemo } from "react";
 import { Transaction, Type } from "../../../../../prisma/generated/browser";
 
 interface RecentTransactionsProps {
   transactions: Transaction[];
+  index: number;
 }
 
 function getCategoryConfig(transaction: Transaction) {
@@ -72,7 +75,10 @@ const TransactionItem = memo(
   },
 );
 
-const RecentTransactions = ({ transactions }: RecentTransactionsProps) => {
+const RecentTransactions = ({
+  transactions,
+  index,
+}: RecentTransactionsProps) => {
   const items = useMemo(
     () =>
       transactions
@@ -94,7 +100,12 @@ const RecentTransactions = ({ transactions }: RecentTransactionsProps) => {
   const hasData = items.length > 0;
 
   return (
-    <div className="col-span-12 lg:col-span-8 h-full bg-white border border-[#E5E5E0] rounded-2xl p-5 shadow-sm">
+    <motion.div
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInTransition(index)}
+      className="col-span-12 lg:col-span-8 h-full bg-white border border-[#E5E5E0] rounded-2xl p-5 shadow-sm"
+    >
       <div className="flex items-center justify-between mb-4">
         <p className="text-sm font-semibold text-black">Recent Transactions</p>
 
@@ -131,7 +142,7 @@ const RecentTransactions = ({ transactions }: RecentTransactionsProps) => {
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -3,17 +3,20 @@ import {
   ChartContainer,
   ChartTooltip,
 } from "@/components/ui/chart";
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { EXPENSE_CATEGORY_OPTIONS } from "@/lib/constants";
 import { formatCurrency } from "@/lib/utils";
 import { GetInsightsResponse } from "@/services/insight";
 import { PieChartIcon } from "lucide-react";
+import { motion } from "motion/react";
 import { Pie, PieChart } from "recharts";
 
 interface ExpenseGraphProps {
   data: GetInsightsResponse["expenseByCategory"];
+  index: number;
 }
 
-const ExpenseGraph = ({ data }: ExpenseGraphProps) => {
+const ExpenseGraph = ({ data, index }: ExpenseGraphProps) => {
   const chartData = data.map(({ category, total }) => ({
     category,
     total,
@@ -34,7 +37,12 @@ const ExpenseGraph = ({ data }: ExpenseGraphProps) => {
   const hasData = chartData.length > 0;
 
   return (
-    <div className="col-span-12 lg:col-span-5 h-full bg-white border border-[#E5E5E0] rounded-2xl p-5 shadow-sm flex flex-col">
+    <motion.div
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInTransition(index)}
+      className="col-span-12 lg:col-span-5 h-full bg-white border border-[#E5E5E0] rounded-2xl p-5 shadow-sm flex flex-col"
+    >
       <p className="text-sm font-semibold text-black">By Category</p>
       <p className="text-xs text-[#9CA3AF] mb-1">Expense breakdown</p>
 
@@ -117,7 +125,7 @@ const ExpenseGraph = ({ data }: ExpenseGraphProps) => {
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

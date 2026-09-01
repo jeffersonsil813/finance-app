@@ -1,7 +1,9 @@
 import CustomButton from "@/components/custom-button";
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { getAIAnalysis } from "@/services/ai-analyze";
 import { useQuery } from "@tanstack/react-query";
 import { LucideSparkles } from "lucide-react";
+import { motion } from "motion/react";
 import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 
@@ -9,12 +11,14 @@ interface AIAnalysisProps {
   year: number;
   month: number;
   isAbleToGenerateAnalysis: boolean;
+  index: number;
 }
 
 const AIAnalysis = ({
   month,
   year,
   isAbleToGenerateAnalysis,
+  index,
 }: AIAnalysisProps) => {
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["AI Analysis", year, month],
@@ -43,7 +47,12 @@ const AIAnalysis = ({
   }
 
   return (
-    <div className="col-span-12 lg:col-span-4 h-full bg-linear-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#DCFCE7] border border-[#BBF7D0] rounded-2xl p-5 flex flex-col shadow-sm">
+    <motion.div
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInTransition(index)}
+      className="col-span-12 lg:col-span-4 h-full bg-linear-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#DCFCE7] border border-[#BBF7D0] rounded-2xl p-5 flex flex-col shadow-sm"
+    >
       <div className={`flex items-center gap-2.5 ${data ? "mb-1" : "mb-3"}`}>
         <div className="w-8 h-8 bg-[#16A34A] text-white rounded-xl flex items-center justify-center shadow-sm">
           <LucideSparkles className="w-3.75 h-3.75" />
@@ -86,7 +95,7 @@ const AIAnalysis = ({
       >
         {isFetching ? "Generating..." : "Generate Analysis"}
       </CustomButton>
-    </div>
+    </motion.div>
   );
 };
 

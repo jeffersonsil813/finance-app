@@ -1,6 +1,7 @@
-// components/summary-card.tsx
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { formatCurrency } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
+import { motion } from "motion/react";
 
 interface SummaryCardProps {
   label: string;
@@ -12,6 +13,7 @@ interface SummaryCardProps {
   changePercent?: number | null;
   invertChangeColor?: boolean;
   footer?: string;
+  index: number;
 }
 
 export function SummaryCard({
@@ -24,6 +26,7 @@ export function SummaryCard({
   changePercent,
   invertChangeColor = false,
   footer,
+  index,
 }: SummaryCardProps) {
   const isDark = variant === "dark";
 
@@ -31,7 +34,10 @@ export function SummaryCard({
   const changeIsGood = invertChangeColor ? !isPositive : isPositive;
 
   return (
-    <div
+    <motion.div
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInTransition(index)}
       className={`col-span-12 lg:col-span-4 h-full rounded-2xl p-5 ${
         isDark
           ? "bg-black shadow-md"
@@ -84,6 +90,6 @@ export function SummaryCard({
           {changePercent}% vs last month
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }
