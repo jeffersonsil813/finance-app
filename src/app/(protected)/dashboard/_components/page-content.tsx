@@ -7,6 +7,7 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import AIAnalysis from "./ai-analysis";
 import ExpenseGraph from "./expense-graph";
+import MonthlyOverview from "./monthly-overview";
 import PageHeader from "./page-header";
 import RecentTransactions from "./recent-transactions";
 import { SummaryCard } from "./summary-card";
@@ -61,7 +62,7 @@ const PageContent = () => {
           invertChangeColor
         />
 
-        <div className="col-span-12 lg:col-span-7 h-full">4</div>
+        <MonthlyOverview data={insightsData?.monthlyOverview || []} />
 
         <ExpenseGraph data={insightsData?.expenseByCategory || []} />
 
