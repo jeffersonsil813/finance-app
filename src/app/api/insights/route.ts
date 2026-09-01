@@ -213,6 +213,10 @@ export async function GET(request: Request) {
       };
     });
 
+    const hasMonthlyOverviewData = monthlyOverview.some(
+      ({ income, expenses }) => income > 0 || expenses > 0,
+    );
+
     return NextResponse.json(
       {
         userFirstName: (user?.name || "").split(" ")[0] || "",
@@ -223,7 +227,7 @@ export async function GET(request: Request) {
         expenseChangePercent: calcPercentageChange(outValue, prevOutValue),
         expenseByCategory,
         recentTransactions,
-        monthlyOverview,
+        monthlyOverview: hasMonthlyOverviewData ? monthlyOverview : [],
       },
       { status: 200 },
     );
