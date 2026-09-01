@@ -42,7 +42,7 @@ const ExpenseGraph = ({ data }: ExpenseGraphProps) => {
         <>
           <ChartContainer
             config={chartConfig}
-            className="w-full aspect-square max-h-40 min-w-0"
+            className="w-full flex-1 aspect-square"
           >
             <PieChart>
               <ChartTooltip
@@ -76,7 +76,7 @@ const ExpenseGraph = ({ data }: ExpenseGraphProps) => {
             </PieChart>
           </ChartContainer>
 
-          <ul className="space-y-2 flex-1">
+          <ul className="space-y-2 flex flex-col justify-end">
             {chartData.map(({ category, total, fill }) => {
               const label = EXPENSE_CATEGORY_OPTIONS.find(
                 (op) => op.value === category,
