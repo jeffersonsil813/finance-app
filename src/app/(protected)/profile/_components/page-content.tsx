@@ -2,28 +2,35 @@
 
 import CustomButton from "@/components/custom-button";
 import { useLogout } from "@/hooks/use-logout";
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { LogOut } from "lucide-react";
+import { motion } from "motion/react";
 import ChangePasswordForm from "./change-password-form";
 import UserForm from "./user-form";
 
 const PageContent = () => {
   const { handleLogout, isPending } = useLogout();
 
+  const MotionCustomButton = motion.create(CustomButton);
+
   return (
     <main className="flex flex-col space-y-3 w-full max-w-120">
       <h1 className="text-[20px] font-semibold mb-4">Profile</h1>
 
-      <UserForm />
-      <ChangePasswordForm />
+      <UserForm index={0} />
+      <ChangePasswordForm index={1} />
 
-      <CustomButton
+      <MotionCustomButton
         startIcon={LogOut}
         className="h-11 rounded-2xl border border-[#FEE2E2] bg-white text-[#DC2626] hover:bg-[#FEF2F2] shadow-sm"
         onClick={handleLogout}
         disabled={isPending}
+        initial={fadeInUp.initial}
+        animate={fadeInUp.animate}
+        transition={fadeInTransition(2)}
       >
         Log out
-      </CustomButton>
+      </MotionCustomButton>
     </main>
   );
 };

@@ -6,16 +6,20 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { handleApiError } from "@/lib/handle-api-error";
 import { changePasswordSchema } from "@/schemas/user";
 import { changeUserPassword } from "@/services/user-me";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import { motion } from "motion/react";
 import toast from "react-hot-toast";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Container from "./container";
 
-const ChangePasswordForm = () => {
+const MotionContainer = motion.create(Container);
+
+const ChangePasswordForm = ({ index }: { index: number }) => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: changeUserPassword,
   });
@@ -43,7 +47,11 @@ const ChangePasswordForm = () => {
   });
 
   return (
-    <Container>
+    <MotionContainer
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInTransition(index)}
+    >
       <Accordion>
         <AccordionItem>
           <AccordionTrigger
@@ -131,7 +139,7 @@ const ChangePasswordForm = () => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </Container>
+    </MotionContainer>
   );
 };
 

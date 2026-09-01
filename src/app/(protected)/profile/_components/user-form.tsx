@@ -1,15 +1,19 @@
 import Container from "@/app/(protected)/profile/_components/container";
 import CustomButton from "@/components/custom-button";
 import CustomField from "@/components/custom-field";
+import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { handleApiError } from "@/lib/handle-api-error";
 import { formatDate } from "@/lib/utils";
 import { updateUserSchema } from "@/schemas/user";
 import { getUser, GetUserResponse, updateUser } from "@/services/user-me";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import { motion } from "motion/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+
+const MotionContainer = motion.create(Container);
 
 const UserHeader = ({ createdAt, email, initials, name }: GetUserResponse) => {
   return (
@@ -31,7 +35,7 @@ const UserHeader = ({ createdAt, email, initials, name }: GetUserResponse) => {
   );
 };
 
-const UserForm = () => {
+const UserForm = ({ index }: { index: number }) => {
   const [isEditing, setIsEditing] = useState(false);
   const queryClient = useQueryClient();
 
@@ -80,7 +84,11 @@ const UserForm = () => {
   };
 
   return (
-    <Container>
+    <MotionContainer
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInTransition(index)}
+    >
       {userData && (
         <UserHeader
           createdAt={userData.createdAt}
@@ -144,7 +152,7 @@ const UserForm = () => {
           </CustomButton>
         )}
       </form>
-    </Container>
+    </MotionContainer>
   );
 };
 
