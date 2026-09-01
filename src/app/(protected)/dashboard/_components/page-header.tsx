@@ -1,4 +1,6 @@
 import { currentMonth, currentYear } from "@/lib/constants";
+import { getFirstTransactionDate } from "@/services/transaction";
+import { useQuery } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
 import { MonthYearPicker } from "./month-year-picker";
 
@@ -17,6 +19,11 @@ interface PageHeaderProps {
 }
 
 const PageHeader = ({ period, setPeriod, userName }: PageHeaderProps) => {
+  const { data } = useQuery({
+    queryKey: ["first-transaction-date"],
+    queryFn: getFirstTransactionDate,
+  });
+
   const handleChangeDate = (month: number, year: number) => {
     setPeriod({ month, year });
   };
@@ -32,6 +39,16 @@ const PageHeader = ({ period, setPeriod, userName }: PageHeaderProps) => {
         year={period.year}
         onChange={handleChangeDate}
         maxDate={{ month: currentMonth, year: currentYear }}
+        minDate={
+          data === undefined
+            ? undefined
+            : data.firstTransactionDate
+              ? {
+                  month: data.firstTransactionDate.month,
+                  year: data.firstTransactionDate.year,
+                }
+              : { month: currentMonth, year: currentYear }
+        }
       />
     </div>
   );

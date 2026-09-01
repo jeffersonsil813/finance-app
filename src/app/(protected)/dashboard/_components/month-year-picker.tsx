@@ -19,10 +19,11 @@ const MONTHS = [
 ];
 
 interface MonthYearPickerProps {
-  month: number; // 1-12
+  month: number;
   year: number;
   onChange: (month: number, year: number) => void;
   maxDate?: { month: number; year: number };
+  minDate?: { month: number; year: number };
 }
 
 export function MonthYearPicker({
@@ -30,6 +31,7 @@ export function MonthYearPicker({
   year,
   onChange,
   maxDate,
+  minDate,
 }: MonthYearPickerProps) {
   const isAtMax = maxDate && year === maxDate.year && month === maxDate.month;
 
@@ -37,7 +39,14 @@ export function MonthYearPicker({
     maxDate &&
     (year > maxDate.year || (year === maxDate.year && month > maxDate.month));
 
+  const isAtMin = minDate && year === minDate.year && month === minDate.month;
+
+  const isBeforeMin =
+    minDate &&
+    (year < minDate.year || (year === minDate.year && month < minDate.month));
+
   function goToPrevious() {
+    if (isAtMin || isBeforeMin) return;
     if (month === 1) {
       onChange(12, year - 1);
     } else {
@@ -61,6 +70,7 @@ export function MonthYearPicker({
         size="icon"
         className="h-7 w-7 rounded-full text-[#6B7280] hover:text-black hover:bg-[#F5F5F2] transition cursor-pointer"
         onClick={goToPrevious}
+        disabled={isAtMin || isBeforeMin}
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
