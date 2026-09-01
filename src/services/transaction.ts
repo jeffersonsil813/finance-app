@@ -65,3 +65,19 @@ export async function deleteTransaction(transactionId: string) {
     method: "DELETE",
   });
 }
+
+interface GetFirstTransactionDateResponse {
+  firstTransactionDate: {
+    year: number;
+    month: number;
+  };
+}
+
+export async function getFirstTransactionDate() {
+  return api<GetFirstTransactionDateResponse>(
+    "/api/transactions/first-transaction-date",
+    {
+      method: "GET",
+    },
+  );
+}
