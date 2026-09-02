@@ -1,14 +1,27 @@
 export const fadeInUp = {
+  initial: { opacity: 0, y: -12 },
+  animate: { opacity: 1, y: 0 },
+};
+
+export const fadeInDown = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
 };
 
-export const FADE_IN_DURATION = 0.2;
+export const fadeInLeft = {
+  initial: { opacity: 0, x: -12 },
+  animate: { opacity: 1, x: 0 },
+};
 
-export function fadeInTransition(index = 0) {
+export const fadeInRight = {
+  initial: { opacity: 0, x: 12 },
+  animate: { opacity: 1, x: 0 },
+};
+
+export function fadeInTransition(index = 0, duration = 0.3) {
   return {
-    duration: FADE_IN_DURATION,
+    duration: duration,
     ease: "easeOut" as const,
-    delay: index * FADE_IN_DURATION,
+    delay: index * duration,
   };
 }
