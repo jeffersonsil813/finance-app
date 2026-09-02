@@ -9,12 +9,12 @@ export const fadeInDown = {
 };
 
 export const fadeInLeft = {
-  initial: { opacity: 0, x: -12 },
+  initial: { opacity: 0, x: -20 },
   animate: { opacity: 1, x: 0 },
 };
 
 export const fadeInRight = {
-  initial: { opacity: 0, x: 12 },
+  initial: { opacity: 0, x: 20 },
   animate: { opacity: 1, x: 0 },
 };
 
