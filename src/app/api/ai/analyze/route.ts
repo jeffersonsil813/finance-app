@@ -1,6 +1,7 @@
 import { generateFinancialAnalysis } from "@/lib/ai";
 import { getUserId, UnauthorizedError } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { APICallError } from "ai";
 import { NextResponse } from "next/server";
 
 export const maxDuration = 60;
@@ -48,6 +49,16 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       return NextResponse.json({ error: error.message }, { status: 401 });
+    }
+
+    if (APICallError.isInstance(error) && error.statusCode === 429) {
+      return NextResponse.json(
+        {
+          error:
+            "Gemini API limit reached. Please wait a few seconds and try again",
+        },
+        { status: 429 },
+      );
     }
 
     console.error("AI analysis route error:", error);

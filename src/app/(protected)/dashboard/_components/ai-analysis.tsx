@@ -1,7 +1,7 @@
 import CustomButton from "@/components/custom-button";
 import { fadeInTransition, fadeInUp } from "@/lib/animations";
 import { getAIAnalysis } from "@/services/ai-analyze";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { LucideSparkles } from "lucide-react";
 import { motion } from "motion/react";
 import toast from "react-hot-toast";
@@ -20,30 +20,16 @@ const AIAnalysis = ({
   isAbleToGenerateAnalysis,
   index,
 }: AIAnalysisProps) => {
-  const { data, isFetching, refetch } = useQuery({
-    queryKey: ["AI Analysis", year, month],
-    queryFn: async () => {
-      const params = { year, month };
-      return await getAIAnalysis(params);
-    },
-    enabled: false,
-    staleTime: Infinity,
+  const { data, isPending, mutateAsync } = useMutation({
+    mutationFn: () => getAIAnalysis({ year, month }),
   });
 
-  function handleGenerate() {
-    toast.promise(
-      refetch().then((result) => {
-        if (result.isError) {
-          throw result.error;
-        }
-        return result.data;
-      }),
-      {
-        loading: "Generating analysis...",
-        success: "Analysis ready!",
-        error: (data) => data?.error ?? "Failed to generate analysis",
-      },
-    );
+  async function handleGenerate() {
+    toast.promise(mutateAsync(), {
+      loading: "Generating analysis...",
+      success: "Analysis ready!",
+      error: (data) => data?.error ?? "Failed to generate analysis",
+    });
   }
 
   return (
@@ -90,10 +76,10 @@ const AIAnalysis = ({
 
       <CustomButton
         startIcon={LucideSparkles}
-        disabled={isFetching || !isAbleToGenerateAnalysis}
+        disabled={isPending || !isAbleToGenerateAnalysis}
         onClick={handleGenerate}
       >
-        {isFetching ? "Generating..." : "Generate Analysis"}
+        {isPending ? "Generating..." : "Generate Analysis"}
       </CustomButton>
     </motion.div>
   );

@@ -33,6 +33,7 @@ Formatting rules:
   const { text } = await generateText({
     model: google("gemini-3.6-flash"),
     prompt,
+    maxRetries: 0,
   });
 
   return text;
