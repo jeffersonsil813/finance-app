@@ -3,6 +3,8 @@ import { getUserId, UnauthorizedError } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60;
+
 export async function POST(request: Request) {
   try {
     const userId = await getUserId();
@@ -47,6 +49,8 @@ export async function POST(request: Request) {
     if (error instanceof UnauthorizedError) {
       return NextResponse.json({ error: error.message }, { status: 401 });
     }
+
+    console.error("AI analysis route error:", error);
 
     return NextResponse.json(
       { error: "Internal server error" },
