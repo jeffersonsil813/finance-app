@@ -2,7 +2,7 @@
 
 A personal finance management SaaS with a financial overview dashboard, transaction management (income and expenses), AI-powered financial analysis, and a user profile area. Fully responsive, with custom JWT-based authentication.
 
-**Live demo:** [Add your deployment link here]
+**Live demo:** [Finance App](https://finance-app-by-jeff.vercel.app/)
 
 ![Dashboard preview](./public/dashboard-page.png)
 
