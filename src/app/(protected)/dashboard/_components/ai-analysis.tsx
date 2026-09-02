@@ -62,7 +62,7 @@ const AIAnalysis = ({
       </div>
 
       <div className="text-xs text-[#374151] leading-[1.6] mb-4 flex-1 prose prose-sm prose-headings:text-sm prose-headings:font-semibold prose-headings:mt-3 prose-headings:mb-1 prose-p:my-1.5 prose-strong:text-[#166534] max-w-none">
-        {data?.analysis ? (
+        {data?.analysis && !isAbleToGenerateAnalysis ? (
           <ReactMarkdown
             components={{
               h3: ({ children }) => (
